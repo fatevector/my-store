@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import categoryService from "../services/category.service";
 
 const categoriesSlice = createSlice({
-    name: "category",
+    name: "categories",
     initialState: {
         entities: null,
         isLoading: true,
@@ -10,15 +10,15 @@ const categoriesSlice = createSlice({
         lastFetch: null
     },
     reducers: {
-        categoryRequested: state => {
+        categoriesRequested: state => {
             state.isLoading = true;
         },
-        categoryReceived: (state, action) => {
+        categoriesReceived: (state, action) => {
             state.entities = action.payload;
             state.isLoading = false;
             state.lastFetch = Date.now();
         },
-        categoryRequestFailed: (state, action) => {
+        categoriesRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         }
@@ -26,31 +26,32 @@ const categoriesSlice = createSlice({
 });
 
 const { reducer: categoriesReducer, actions } = categoriesSlice;
-const { categoryRequested, categoryReceived, categoryRequestFailed } = actions;
+const { categoriesRequested, categoriesReceived, categoriesRequestFailed } =
+    actions;
 
 const isOutdated = date => Date.now() - date > 10 * 60 * 1000;
 
-export const loadCategoryList = () => async (dispatch, getState) => {
-    const { lastFetch } = getState().category;
+export const loadCategoriesList = () => async (dispatch, getState) => {
+    const { lastFetch } = getState().categories;
     if (isOutdated(lastFetch)) {
-        dispatch(categoryRequested());
+        dispatch(categoriesRequested());
         try {
             const { content } = await categoryService.get();
-            dispatch(categoryReceived(content));
+            dispatch(categoriesReceived(content));
         } catch (error) {
-            dispatch(categoryRequestFailed(error.message));
+            dispatch(categoriesRequestFailed(error.message));
         }
     }
 };
 
-export const getCategoriesList = () => state => state.category.entities;
+export const getCategoriesList = () => state => state.categories.entities;
 
 export const getCategoriesLoadingStatus = () => state =>
-    state.category.isLoading;
+    state.categories.isLoading;
 
 export const getCategoryById = categoryId => state => {
-    if (state.category.entities) {
-        return state.category.entities.find(
+    if (state.categories.entities) {
+        return state.categories.entities.find(
             category => category._id === categoryId
         );
     }
