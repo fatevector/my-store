@@ -16,5 +16,13 @@
             "id": 4,
             "name": "Обувь"
         }
-    ]
+    ],
+    "auth": {
+        "token": {
+            "refreshToken": "labfaklf",
+            "idToken": "clakwkl",
+            "localId": 1,
+            "expiresIn": 3600 
+        }
+    }
 }
