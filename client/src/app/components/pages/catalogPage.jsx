@@ -8,6 +8,7 @@ import paginate from "../../utils/paginate";
 import GroupList from "../common/groupList";
 import ProductsList from "../ui/productsList";
 import Pagination from "../common/pagination";
+// import SearchField from "../common/searchField";
 
 const CatalogPage = () => {
     const dispatch = useDispatch();
@@ -27,7 +28,10 @@ const CatalogPage = () => {
     };
 
     const handleClearFilter = () => {
-        setSelectedCategory(undefined);
+        setSelectedCategory({
+            id: 0,
+            name: "Популярное"
+        });
         setCurrentPage(1);
         // setFilter(undefined);
         // setSearchRequest(undefined);
@@ -66,6 +70,12 @@ const CatalogPage = () => {
             <div className="d-flex flex-column">
                 {productsList ? (
                     <>
+                        {/* <SearchField
+                            name="searchRequest"
+                            value={searchRequest}
+                            onChange={handleSearchChange}
+                            placeholder="Поиск..."
+                        /> */}
                         <ProductsList
                             productsList={paginate(
                                 productsList,

@@ -14,7 +14,7 @@ const GroupList = ({
                     key={items[item][valueProperty]}
                     className={
                         "list-group-item" +
-                        (items[item] === selectedItem ? " active" : "")
+                        (items[item].id === selectedItem.id ? " active" : "")
                     }
                     onClick={() => onItemSelect(items[item])}
                     role="button"
