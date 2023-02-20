@@ -31,7 +31,7 @@ const { productsRequested, productsReceived, productsRequestFailed } = actions;
 // const isOutdated = date => Date.now() - date > 10 * 60 * 1000;
 
 export const loadProductsList =
-    (category = "popular", page = 1, limit = 3) =>
+    (category = "popular", page, limit) =>
     async (dispatch, getState) => {
         // const { lastFetch } = getState().products;
         // if (isOutdated(lastFetch)) {

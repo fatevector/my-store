@@ -3,14 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getCategoriesList } from "../../store/categories";
 import { getProductsList, loadProductsList } from "../../store/products";
+import paginate from "../../utils/paginate";
+
 import GroupList from "../common/groupList";
 import ProductsList from "../ui/productsList";
+import Pagination from "../common/pagination";
 
 const CatalogPage = () => {
     const dispatch = useDispatch();
     const productsList = useSelector(getProductsList());
     const categoriesList = useSelector(getCategoriesList());
-    const [selectedCategory, setSelectedCategory] = useState();
+    const [selectedCategory, setSelectedCategory] = useState({
+        id: 0,
+        name: "Популярное"
+    });
+    // const [searchRequest, setSearchRequest] = useState(undefined);
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 3;
+    // const [filter, setFilter] = useState();
 
     const handleCategorySelect = item => {
         setSelectedCategory(item);
@@ -18,14 +28,25 @@ const CatalogPage = () => {
 
     const handleClearFilter = () => {
         setSelectedCategory(undefined);
-        // setCurrentPage(1);
+        setCurrentPage(1);
         // setFilter(undefined);
         // setSearchRequest(undefined);
     };
 
+    const handlePageChange = pageIndex => {
+        setCurrentPage(pageIndex);
+    };
+
     useEffect(() => {
-        dispatch(loadProductsList("popular", 1, 3));
-    }, []);
+        if (selectedCategory !== undefined) {
+            setCurrentPage(1);
+            // setSearchRequest(undefined);
+            dispatch(loadProductsList(selectedCategory.id));
+            // setFilter({
+            //     rule: product => product.category === selectedCategory.id
+            // });
+        }
+    }, [selectedCategory]);
 
     return (
         <div className="d-flex">
@@ -44,7 +65,23 @@ const CatalogPage = () => {
             </div>
             <div className="d-flex flex-column">
                 {productsList ? (
-                    <ProductsList productsList={productsList} />
+                    <>
+                        <ProductsList
+                            productsList={paginate(
+                                productsList,
+                                currentPage,
+                                pageSize
+                            )}
+                        />
+                        <div className="d-flex justify-content-center">
+                            <Pagination
+                                itemsCount={productsList.length}
+                                pageSize={pageSize}
+                                currentPage={currentPage}
+                                onPageChange={handlePageChange}
+                            />
+                        </div>
+                    </>
                 ) : (
                     <h1>Loading...</h1>
                 )}
