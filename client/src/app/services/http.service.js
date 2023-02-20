@@ -43,18 +43,18 @@ http.interceptors.request.use(
     }
 );
 
-function transformData(data) {
-    return data && !data._id
-        ? Object.keys(data).map(key => ({
-              ...data[key]
-          }))
-        : data;
-}
+// function transformData(data) {
+//     return data && !data._id
+//         ? Object.keys(data).map(key => ({
+//               ...data[key]
+//           }))
+//         : data;
+// }
 
 http.interceptors.response.use(
     res => {
         if (configFile.isFakeServer) {
-            res.data = { content: transformData(res.data) };
+            res.data = { content: res.data };
         }
         return res;
     },

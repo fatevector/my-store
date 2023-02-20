@@ -5,22 +5,15 @@ import {
     getCategoriesLoadingStatus,
     loadCategoriesList
 } from "../../store/categories";
-
-// import {
-//     getIsLoggedIn,
-//     getUsersLoadingStatus,
-//     loadUsersList
-// } from "../../../store/users";
-// import { loadQualitiesList } from "../../../store/qualities";
+import { loadUser } from "../../store/auth";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
     // const isLoggedIn = useSelector(getIsLoggedIn());
-    // const usersStatusLoading = useSelector(getUsersLoadingStatus());
     const categoriesStatusLoading = useSelector(getCategoriesLoadingStatus());
     useEffect(() => {
-        // dispatch(loadQualitiesList());
         dispatch(loadCategoriesList());
+        dispatch(loadUser(1));
         // if (isLoggedIn) {
         //     dispatch(loadUsersList());
         // }

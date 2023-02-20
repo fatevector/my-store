@@ -24,5 +24,13 @@
             "localId": 1,
             "expiresIn": 3600 
         }
-    }
+    },
+    "user": [
+        {
+            "id": 1,
+            "name": "Иван Петров",
+            "email": "test@test.com",
+            "image": "https://avatars.dicebear.com/api/avataaars/piie.svg"
+        }
+    ]
 }
