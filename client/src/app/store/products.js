@@ -1,13 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
+
 import productService from "../services/product.service";
 
 const productsSlice = createSlice({
     name: "products",
     initialState: {
         entities: null,
+        currentProduct: null,
         isLoading: true,
         error: null
-        // lastFetch: null
     },
     reducers: {
         productsRequested: state => {
@@ -16,25 +17,35 @@ const productsSlice = createSlice({
         productsReceived: (state, action) => {
             state.entities = action.payload;
             state.isLoading = false;
-            // state.lastFetch = Date.now();
         },
         productsRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
+        },
+        currentProductReceived: (state, action) => {
+            state.currentProduct = action.payload;
         }
     }
 });
 
 const { reducer: productsReducer, actions } = productsSlice;
-const { productsRequested, productsReceived, productsRequestFailed } = actions;
+const {
+    productsRequested,
+    productsReceived,
+    productsRequestFailed,
+    currentProductReceived
+} = actions;
 
-// const isOutdated = date => Date.now() - date > 10 * 60 * 1000;
+const currentProductRequested = createAction(
+    "products/currentProductRequested"
+);
+const currentProductRequestFailed = createAction(
+    "products/currentProductRequestFailed"
+);
 
 export const loadProductsList =
     (category = "popular", page, limit) =>
-    async (dispatch, getState) => {
-        // const { lastFetch } = getState().products;
-        // if (isOutdated(lastFetch)) {
+    async dispatch => {
         dispatch(productsRequested());
         try {
             const { content } = await productService.getByCategory(
@@ -46,19 +57,22 @@ export const loadProductsList =
         } catch (error) {
             dispatch(productsRequestFailed(error.message));
         }
-        // }
     };
+
+export const loadProductById = id => async (dispatch, getState) => {
+    dispatch(currentProductRequested());
+    try {
+        const { content } = await productService.getById(id);
+        dispatch(currentProductReceived(content));
+    } catch (error) {
+        dispatch(currentProductRequestFailed(error.message));
+    }
+};
 
 export const getProductsList = () => state => state.products.entities;
 
 export const getProductsLoadingStatus = () => state => state.products.isLoading;
 
-export const getProductById = productId => state => {
-    if (state.products.entities) {
-        return state.products.entities.find(
-            product => product._id === productId
-        );
-    }
-};
+export const getCurrentProduct = () => state => state.products.currentProduct;
 
 export default productsReducer;

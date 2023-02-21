@@ -1,8 +1,10 @@
+import ProductCard from "./productCard";
+
 const ProductsList = ({ productsList }) => {
     return (
-        <ul>
+        <ul className="row g-3 pe-3">
             {productsList.map(product => (
-                <li key={product.id}>{product.name}</li>
+                <ProductCard key={product.id} product={product} />
             ))}
         </ul>
     );

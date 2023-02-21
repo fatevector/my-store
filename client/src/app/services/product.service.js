@@ -13,6 +13,10 @@ const productService = {
         if (page && limit) endpoint += `&_page=${page}&_limit=${limit}`;
         const { data } = await httpService.get(endpoint);
         return data;
+    },
+    getById: async id => {
+        const { data } = await httpService.get(productEndpoint + id);
+        return data;
     }
 };
 
