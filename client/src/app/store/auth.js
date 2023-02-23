@@ -84,10 +84,10 @@ const userUpdateRequested = createAction("users/userUpdateRequested");
 const updateUserFailed = createAction("users/updateUserFailed");
 // const createUserFailed = createAction("users/createUserFailed");
 
-export const loadUser = () => async dispatch => {
+export const loadUser = id => async dispatch => {
     dispatch(userRequested());
     try {
-        const { content } = await userService.get();
+        const { content } = await userService.get(id);
         dispatch(userReceived(content));
     } catch (error) {
         dispatch(userRequestFailed(error.message));
@@ -217,7 +217,7 @@ export const getIsLoggedIn = () => state => state.auth.isLoggedIn;
 
 export const getDataStatus = () => state => state.auth.dataLoaded;
 
-export const getCurrentUserId = () => state => state.auth.auth?.userId;
+export const getCurrentUserId = () => state => state.auth.auth?.id;
 
 export const getUserLoadingStatus = () => state => state.auth.isLoading;
 

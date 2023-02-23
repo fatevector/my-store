@@ -5,24 +5,25 @@ import {
     getCategoriesLoadingStatus,
     loadCategoriesList
 } from "../../store/categories";
-import { getDataStatus, getIsLoggedIn, loadUser } from "../../store/auth";
+import {
+    getCurrentUserId,
+    getDataStatus,
+    getIsLoggedIn,
+    loadUser
+} from "../../store/auth";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(getIsLoggedIn());
+    const userId = useSelector(getCurrentUserId());
     const categoriesStatusLoading = useSelector(getCategoriesLoadingStatus());
     const userDataIsLoaded = useSelector(getDataStatus());
     useEffect(() => {
         dispatch(loadCategoriesList());
         if (isLoggedIn && !userDataIsLoaded) {
-            dispatch(loadUser(1));
+            dispatch(loadUser(userId));
         }
-        //Нужно сделать загрузку корзины
-        // if (isLoggedIn) {
-        //     dispatch(loadUsersList());
-        // }
     }, [isLoggedIn, userDataIsLoaded]);
-    // }, [isLoggedIn]);
 
     if (categoriesStatusLoading || (isLoggedIn && !userDataIsLoaded))
         return "Loading...";

@@ -19,8 +19,8 @@ const userService = {
         );
         return data;
     },
-    get: async () => {
-        const { data } = await httpService.get(userEndpoint + 1); //убрать хардкод id
+    get: async id => {
+        const { data } = await httpService.get(userEndpoint + id);
         return data;
     }
 };

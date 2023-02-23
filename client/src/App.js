@@ -17,7 +17,7 @@ function App() {
                 <Route exact path="/product/:id" component={Catalog} />
                 <Route exact path="/cart" component={Cart} />
                 <Route exact path="/login/:type?" component={Login} />
-                <Route exact path="/user/:id/:edit?" component={User} />
+                <Route exact path="/profile/:edit?" component={User} />
                 <Route exact path="/logout" component={LogOut} />
                 <Redirect to="/" />
             </Switch>
