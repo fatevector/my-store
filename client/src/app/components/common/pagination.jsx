@@ -5,7 +5,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
     if (pageCount === 1) return null;
     const pages = new Array(pageCount).fill(1).map((_, index) => index + 1);
     return (
-        <nav>
+        <nav className="my-3">
             <ul className="pagination">
                 {pages.map(page => (
                     <li

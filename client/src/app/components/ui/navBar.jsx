@@ -8,7 +8,7 @@ import NavProfile from "./navProfile";
 const NavBar = () => {
     const isLoggedIng = useSelector(getIsLoggedIn());
     return (
-        <nav className="navbar bg-light mb-3">
+        <nav className="navbar bg-light mb-3 border border-secondary-subtle">
             <div className="container-fluid">
                 <ul className="nav">
                     <li className="nav-item">

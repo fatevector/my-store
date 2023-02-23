@@ -3,7 +3,7 @@ import UserCard from "../ui/userCard";
 const UserPage = ({ user }) => {
     return (
         <div className="container">
-            <h1 className="ms-3">Профиль</h1>
+            <h1>Профиль</h1>
             <UserCard user={user} />
         </div>
     );

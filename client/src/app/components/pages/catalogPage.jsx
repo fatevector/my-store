@@ -69,7 +69,7 @@ const CatalogPage = () => {
                         Очистить
                     </button>
                 </div>
-                <div className="d-flex flex-column">
+                <div className="d-flex flex-column container">
                     {productsList ? (
                         <>
                             {/* <SearchField
@@ -85,13 +85,16 @@ const CatalogPage = () => {
                                     pageSize
                                 )}
                             />
-                            <div className="d-flex justify-content-center">
-                                <Pagination
-                                    itemsCount={productsList.length}
-                                    pageSize={pageSize}
-                                    currentPage={currentPage}
-                                    onPageChange={handlePageChange}
-                                />
+                            {/* <div className="d-flex justify-content-center "> */}
+                            <div className="row">
+                                <div className="col-12 g-3 d-flex justify-content-center">
+                                    <Pagination
+                                        itemsCount={productsList.length}
+                                        pageSize={pageSize}
+                                        currentPage={currentPage}
+                                        onPageChange={handlePageChange}
+                                    />
+                                </div>
                             </div>
                         </>
                     ) : (

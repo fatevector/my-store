@@ -11,9 +11,9 @@ const ProductMenuCard = ({ product }) => {
                 role="button"
                 onClick={() => handleNavToProductPage(product.id)}
             >
-                <div className="">
+                <div>
                     <img
-                        className="card-img"
+                        className="card-img-top"
                         src={product.image}
                         alt="Фото еще нет"
                     />
