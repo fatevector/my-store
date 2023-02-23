@@ -1,9 +1,11 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import history from "../../utils/history";
 import { getCurrentUserData } from "../../store/auth";
+import { addProductToCart, removeProductFromCart } from "../../store/cart";
 
 const ProductCartCard = ({ product }) => {
+    const dispatch = useDispatch();
     const currentUserData = useSelector(getCurrentUserData());
     const inCart = currentUserData.cart.find(p => p.id === product.id);
 
@@ -11,12 +13,12 @@ const ProductCartCard = ({ product }) => {
         history.push("/cart");
     };
 
-    const handleAddToCart = () => {
-        console.log("Реализуй метод добавления в корзину");
+    const handleAddToCart = product => {
+        dispatch(addProductToCart(product));
     };
 
-    const handleRemoveFromCart = () => {
-        console.log("Реализуй метод удаления из корзины");
+    const handleRemoveFromCart = id => {
+        dispatch(removeProductFromCart(id));
     };
 
     return (
@@ -34,7 +36,7 @@ const ProductCartCard = ({ product }) => {
                     <>
                         <button
                             className="btn btn-lg btn-danger me-2 mb-2"
-                            onClick={handleRemoveFromCart}
+                            onClick={() => handleRemoveFromCart(product.id)}
                         >
                             Удалить из корзины
                         </button>
@@ -48,7 +50,7 @@ const ProductCartCard = ({ product }) => {
                 ) : (
                     <button
                         className="btn btn-lg btn-primary me-2 mb-2"
-                        onClick={handleAddToCart}
+                        onClick={() => handleAddToCart(product)}
                     >
                         В корзину
                     </button>

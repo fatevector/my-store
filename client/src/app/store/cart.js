@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 
 import productService from "../services/product.service";
+import { addProductToUserCart, removeProductFromUserCart } from "./auth";
 
 const cartSlice = createSlice({
     name: "cart",
@@ -26,12 +27,41 @@ const cartSlice = createSlice({
             state.error = action.payload;
             state.isLoading = false;
             state.dataLoaded = false;
+        },
+        cartReset: (state, action) => {
+            state.entities = null;
+            state.isLoading = true;
+            state.error = null;
+            state.lastFetch = null;
+            state.dataLoaded = false;
+        },
+        productAdded: (state, action) => {
+            state.entities.push(action.payload);
+        },
+        productRemoved: (state, action) => {
+            state.entities = state.entities.filter(
+                product => product.id != action.payload
+            );
         }
     }
 });
 
 const { reducer: cartReducer, actions } = cartSlice;
-const { cartRequested, cartReceived, cartRequestFailed } = actions;
+const {
+    cartRequested,
+    cartReceived,
+    cartRequestFailed,
+    cartReset,
+    productAdded,
+    productRemoved
+} = actions;
+
+const productAddRequested = createAction("cart/productAddRequested");
+const productAddRequestFailed = createAction("cart/productAddRequestFailed");
+const productRemoveRequested = createAction("cart/productRemoveRequested");
+const productRemoveRequestFailed = createAction(
+    "cart/productRemoveRequestFailed"
+);
 
 const isOutdated = date => Date.now() - date > 10 * 60 * 1000;
 
@@ -45,6 +75,30 @@ export const loadCart = idsList => async (dispatch, getState) => {
         } catch (error) {
             dispatch(cartRequestFailed(error.message));
         }
+    }
+};
+
+export const resetCart = () => async (dispatch, getState) => {
+    dispatch(cartReset());
+};
+
+export const addProductToCart = product => async (dispatch, getState) => {
+    dispatch(productAddRequested());
+    try {
+        dispatch(addProductToUserCart({ id: product.id, quantity: 1 }));
+        dispatch(productAdded(product));
+    } catch (error) {
+        dispatch(productAddRequestFailed(error.message));
+    }
+};
+
+export const removeProductFromCart = id => async (dispatch, getState) => {
+    dispatch(productRemoveRequested());
+    try {
+        dispatch(removeProductFromUserCart(id));
+        dispatch(productRemoved(id));
+    } catch (error) {
+        dispatch(productRemoveRequestFailed(error.message));
     }
 };
 
