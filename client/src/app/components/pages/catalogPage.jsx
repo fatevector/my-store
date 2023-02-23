@@ -56,7 +56,7 @@ const CatalogPage = () => {
         <>
             <h1 className="ms-3">Каталог</h1>
             <div className="d-flex">
-                <div className="d-flex flex-column flex-shink-0 p-3">
+                <div className="d-flex flex-column flex-shink-0 px-3">
                     <GroupList
                         selectedItem={selectedCategory}
                         items={categoriesList}

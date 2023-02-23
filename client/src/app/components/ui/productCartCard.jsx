@@ -22,7 +22,7 @@ const ProductCartCard = ({ product }) => {
     };
 
     return (
-        <div className="card m-3 d-flex flex-row">
+        <div className="card mb-3 d-flex flex-row">
             <img
                 className="rounded-start"
                 src={product.image}

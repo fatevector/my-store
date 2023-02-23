@@ -27,8 +27,8 @@ const CartPage = () => {
     if (!cartDataStatus) return "Loading...";
 
     return (
-        <div className="">
-            <h1 className="ms-3">Корзина</h1>
+        <div className="m-3">
+            <h1>Корзина</h1>
             {cart.map(product => (
                 <ProductCartCard key={product.id} product={product} />
             ))}
