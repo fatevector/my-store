@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-// import { getCurrentUserData } from "../../store/users";
+import { getCurrentUserData } from "../../store/auth";
 
 const NavProfile = () => {
-    // const currentUser = useSelector(getCurrentUserData());
-    const currentUser = {
-        id: 1,
-        name: "Иван Петров",
-        email: "test@test.com",
-        image: "https://avatars.dicebear.com/api/avataaars/piie.svg"
-    };
+    const currentUser = useSelector(getCurrentUserData());
+    // const currentUser = {
+    //     id: 1,
+    //     name: "Иван Петров",
+    //     email: "test@test.com",
+    //     image: "https://avatars.dicebear.com/api/avataaars/piie.svg"
+    // };
 
     const [isOpen, setIsOpen] = useState(false);
 

@@ -188,30 +188,16 @@ export const updateUser =
         }
     };
 
-export const getUsers = () => state => state.users.entities;
+export const getIsLoggedIn = () => state => state.auth.isLoggedIn;
 
-export const getUserById = userId => state => {
-    if (state.users.entities) {
-        return state.users.entities.find(user => user._id === userId);
-    }
-};
+export const getDataStatus = () => state => state.auth.dataLoaded;
 
-export const getIsLoggedIn = () => state => state.users.isLoggedIn;
+export const getCurrentUserId = () => state => state.auth.userId;
 
-export const getDataStatus = () => state => state.users.dataLoaded;
+export const getUserLoadingStatus = () => state => state.auth.isLoading;
 
-export const getCurrentUserId = () => state => state.users.auth.userId;
+export const getCurrentUserData = () => state => state.auth.user;
 
-export const getUsersLoadingStatus = () => state => state.users.isLoading;
-
-export const getCurrentUserData = () => state => {
-    if (state.users.entities) {
-        return state.users.entities.find(
-            user => user._id === state.users.auth.userId
-        );
-    }
-};
-
-export const getAuthErrors = () => state => state.users.error;
+export const getAuthErrors = () => state => state.auth.error;
 
 export default authReducer;

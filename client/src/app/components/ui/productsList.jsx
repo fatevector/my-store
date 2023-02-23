@@ -1,10 +1,10 @@
-import ProductCard from "./productCard";
+import ProductMenuCard from "./productMenuCard";
 
 const ProductsList = ({ productsList }) => {
     return (
         <ul className="row g-3 pe-3">
             {productsList.map(product => (
-                <ProductCard key={product.id} product={product} />
+                <ProductMenuCard key={product.id} product={product} />
             ))}
         </ul>
     );

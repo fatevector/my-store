@@ -53,50 +53,53 @@ const CatalogPage = () => {
     }, [selectedCategory]);
 
     return (
-        <div className="d-flex">
-            <div className="d-flex flex-column flex-shink-0 p-3">
-                <GroupList
-                    selectedItem={selectedCategory}
-                    items={categoriesList}
-                    onItemSelect={handleCategorySelect}
-                />
-                <button
-                    className="btn btn-secondary mt-2"
-                    onClick={handleClearFilter}
-                >
-                    Очистить
-                </button>
-            </div>
-            <div className="d-flex flex-column">
-                {productsList ? (
-                    <>
-                        {/* <SearchField
+        <>
+            <h1 className="ms-3">Каталог</h1>
+            <div className="d-flex">
+                <div className="d-flex flex-column flex-shink-0 p-3">
+                    <GroupList
+                        selectedItem={selectedCategory}
+                        items={categoriesList}
+                        onItemSelect={handleCategorySelect}
+                    />
+                    <button
+                        className="btn btn-secondary mt-2"
+                        onClick={handleClearFilter}
+                    >
+                        Очистить
+                    </button>
+                </div>
+                <div className="d-flex flex-column">
+                    {productsList ? (
+                        <>
+                            {/* <SearchField
                             name="searchRequest"
                             value={searchRequest}
                             onChange={handleSearchChange}
                             placeholder="Поиск..."
                         /> */}
-                        <ProductsList
-                            productsList={paginate(
-                                productsList,
-                                currentPage,
-                                pageSize
-                            )}
-                        />
-                        <div className="d-flex justify-content-center">
-                            <Pagination
-                                itemsCount={productsList.length}
-                                pageSize={pageSize}
-                                currentPage={currentPage}
-                                onPageChange={handlePageChange}
+                            <ProductsList
+                                productsList={paginate(
+                                    productsList,
+                                    currentPage,
+                                    pageSize
+                                )}
                             />
-                        </div>
-                    </>
-                ) : (
-                    <h1>Loading...</h1>
-                )}
+                            <div className="d-flex justify-content-center">
+                                <Pagination
+                                    itemsCount={productsList.length}
+                                    pageSize={pageSize}
+                                    currentPage={currentPage}
+                                    onPageChange={handlePageChange}
+                                />
+                            </div>
+                        </>
+                    ) : (
+                        <h1>Loading...</h1>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

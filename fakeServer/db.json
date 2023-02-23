@@ -34,7 +34,25 @@
             "id": 1,
             "name": "Иван Петров",
             "email": "test@test.com",
-            "image": "https://avatars.dicebear.com/api/avataaars/piie.svg"
+            "image": "https://avatars.dicebear.com/api/avataaars/piie.svg",
+            "cart": [
+                {
+                    "id": 1,
+                    "quantity": 1
+                },
+                {
+                    "id": 5,
+                    "quantity": 2
+                },
+                {
+                    "id": 12,
+                    "quantity": 1
+                },
+                {
+                    "id": 20,
+                    "quantity": 4
+                }
+            ]
         }
     ],
     "product": [

@@ -1,5 +1,7 @@
+import CartPage from "../pages/cartPage";
+
 const Cart = () => {
-    return <h1>Корзина</h1>;
+    return <CartPage />;
 };
 
 export default Cart;

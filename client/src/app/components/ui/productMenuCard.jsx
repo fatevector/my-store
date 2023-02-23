@@ -1,6 +1,6 @@
 import history from "../../utils/history";
 
-const ProductCard = ({ product }) => {
+const ProductMenuCard = ({ product }) => {
     const handleNavToProductPage = id => {
         history.push(`/product/${id}`);
     };
@@ -26,4 +26,4 @@ const ProductCard = ({ product }) => {
     );
 };
 
-export default ProductCard;
+export default ProductMenuCard;
