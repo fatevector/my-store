@@ -37,10 +37,6 @@
       "image": "https://avatars.dicebear.com/api/avataaars/piie.svg",
       "cart": [
         {
-          "id": 1,
-          "quantity": 1
-        },
-        {
           "id": 5,
           "quantity": 2
         },
@@ -54,6 +50,10 @@
         },
         {
           "id": 3,
+          "quantity": 1
+        },
+        {
+          "id": 1,
           "quantity": 1
         }
       ]
