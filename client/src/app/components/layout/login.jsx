@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-// import LoginForm from "../components/ui/loginForm";
+import LoginForm from "../ui/loginForm";
 // import RegistrationForm from "../components/ui/registrationForm";
 
 const Login = () => {
@@ -37,7 +37,7 @@ const Login = () => {
                     ) : (
                         <>
                             <h3 className="mb-4">Login</h3>
-                            {/* <LoginForm /> */}
+                            <LoginForm />
                             <p className="d-flex align-items-baseline">
                                 Нет аккаунта?
                                 <button
