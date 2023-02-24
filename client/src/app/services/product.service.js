@@ -1,6 +1,6 @@
 import httpService from "./http.service";
 
-const productEndpoint = "product/";
+const productEndpoint = "products/";
 
 const productService = {
     getByCategory: async (categoryId = 0, page, limit) => {
