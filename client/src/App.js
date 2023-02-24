@@ -1,6 +1,7 @@
 import { Redirect, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
+import ProtectedRoute from "./app/components/common/protectedRoute";
 import NavBar from "./app/components/ui/navBar";
 import Catalog from "./app/components/layout/catalog";
 import Cart from "./app/components/layout/cart";
@@ -15,9 +16,9 @@ function App() {
             <Switch>
                 <Route exact path="/" component={Catalog} />
                 <Route exact path="/product/:id" component={Catalog} />
-                <Route exact path="/cart" component={Cart} />
+                <ProtectedRoute exact path="/cart" component={Cart} />
                 <Route exact path="/login/:type?" component={Login} />
-                <Route exact path="/profile/:edit?" component={User} />
+                <ProtectedRoute exact path="/profile/:edit?" component={User} />
                 <Route exact path="/logout" component={LogOut} />
                 <Redirect to="/" />
             </Switch>

@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+
+import { getCurrentUserData } from "../../store/auth";
 
 import UserPage from "../pages/userPage";
-import { getCurrentUserData } from "../../store/auth";
 
 const User = () => {
     const currentUserData = useSelector(getCurrentUserData());
 
-    if (!currentUserData) return <Redirect to="/login" />;
+    if (!currentUserData) return "Loading...";
     return <UserPage user={currentUserData} />;
 };
 
