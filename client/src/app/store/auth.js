@@ -159,25 +159,25 @@ export const logOut = () => dispatch => {
 //         }
 //     };
 
-export const updateUser = (payload, redirect) => async (dispatch, getState) => {
-    dispatch(userUpdateRequested());
-    try {
-        const currentUser = getState().auth.user;
-        // if (payload.email !== currentUser.email) {
-        //     const data = await authService.update(payload.email);
-        //     localStorageService.setTokens(data);
-        // }
-        const newData = {
-            ...currentUser,
-            ...payload
-        };
-        const { content } = await userService.update(newData);
-        dispatch(userUpdated(content));
-        if (redirect) history.push(redirect);
-    } catch (error) {
-        dispatch(updateUserFailed(error.message));
-    }
-};
+// export const updateUser = (payload, redirect) => async (dispatch, getState) => {
+//     dispatch(userUpdateRequested());
+//     try {
+//         const currentUser = getState().auth.user;
+//         // if (payload.email !== currentUser.email) {
+//         //     const data = await authService.update(payload.email);
+//         //     localStorageService.setTokens(data);
+//         // }
+//         const newData = {
+//             ...currentUser,
+//             ...payload
+//         };
+//         const { content } = await userService.update(newData);
+//         dispatch(userUpdated(content));
+//         if (redirect) history.push(redirect);
+//     } catch (error) {
+//         dispatch(updateUserFailed(error.message));
+//     }
+// };
 
 export const addProductToUserCart = product => async (dispatch, getState) => {
     dispatch(userUpdateRequested());
