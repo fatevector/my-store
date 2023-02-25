@@ -13,6 +13,7 @@ router.post("/signUp", [
     check("password", "Минимальная длина пароля - 8 символов").isLength({
         min: 8
     }),
+    check("name", "Имя не может быть пустым").exists(),
     async (req, res) => {
         try {
             const errors = validationResult(req);
@@ -20,8 +21,8 @@ router.post("/signUp", [
                 return res.status(400).json({
                     error: {
                         message: "INVALID_DATA",
-                        code: 400
-                        // errors: errors.array()
+                        code: 400,
+                        errors: errors.array()
                     }
                 });
             }
@@ -67,8 +68,8 @@ router.post("/signInWithPassword", [
                 return res.status(400).json({
                     error: {
                         message: "INVALID_DATA",
-                        code: 400
-                        // errors: errors.array()
+                        code: 400,
+                        errors: errors.array()
                     }
                 });
             }
