@@ -1,13 +1,13 @@
 const express = require("express");
 const User = require("../models/User");
+const auth = require("../middleware/auth.middleware");
 const router = express.Router({ mergeParams: true });
 
-router.put("/:userId", async (req, res) => {
+router.patch("/:userId", auth, async (req, res) => {
     try {
         const { userId } = req.params;
 
-        // todo: userId === current user id
-        if (userId) {
+        if (userId === req.user._id) {
             const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
                 new: true
             });
@@ -27,12 +27,11 @@ router.put("/:userId", async (req, res) => {
     }
 });
 
-router.get("/:userId", async (req, res) => {
+router.get("/:userId", auth, async (req, res) => {
     try {
         const { userId } = req.params;
 
-        // todo: userId === current user id
-        if (userId) {
+        if (userId === req.user._id) {
             const foundUser = await User.findById(userId);
             res.send(foundUser);
         } else {
