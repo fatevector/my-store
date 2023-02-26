@@ -1,14 +1,18 @@
 import httpService from "./http.service";
+import { useSelector } from "react-redux";
 
 const productEndpoint = "products/";
 
 const productService = {
-    getByCategory: async (categoryId = 0, page, limit) => {
+    getByCategory: async (categoryId, page, limit) => {
+        const popularCategory = useSelector(getCategoriesList()).find(
+            category => category.name === "Популярное"
+        );
         let endpoint = productEndpoint.slice(0, -1);
-        if (categoryId === 0) {
-            endpoint += "?popular=true";
+        if (categoryId === popularCategory._id) {
+            endpoint += "?filterBy=popular&equalTo=true";
         } else {
-            endpoint += `?category=${categoryId}`;
+            endpoint += `?filterBy=category&equalTo=${categoryId}`;
         }
         if (page && limit) endpoint += `&_page=${page}&_limit=${limit}`;
         const { data } = await httpService.get(endpoint);

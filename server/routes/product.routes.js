@@ -1,13 +1,111 @@
 const express = require("express");
+const { check, validationResult } = require("express-validator");
 
 const Product = require("../models/Product");
+const auth = require("../middleware/auth.middleware");
+const Category = require("../models/Category");
 
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
     try {
-        const list = await Product.find();
+        const { filterBy, equalTo } = req.query;
+        let list = [];
+        if (filterBy && equalTo) {
+            list = await Product.find({ [filterBy]: equalTo });
+        } else {
+            list = await Product.find();
+        }
+
+        // todo: фильтр list по !isDeleted
+
         res.status(200).send(list);
+    } catch (error) {
+        res.status(500).json({
+            message: "На сервере произошла ошибка. Попробуйте позже"
+        });
+    }
+});
+
+router.get("/:productId", async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const foundProduct = await Product.findById(productId);
+
+        // todo: Если isDeleted, то кинуть ошибку
+
+        res.send(foundProduct);
+    } catch (error) {
+        res.status(500).json({
+            message: "На сервере произошла ошибка. Попробуйте позже"
+        });
+    }
+});
+
+router.post("/", auth, [
+    check("name", "Наименование товара не может отсутствовать").exists(),
+    check("category", "Категория товара не может отсутствовать").exists(),
+    check("price", "Стоимость товара не может отсутствовать").exists(),
+    async (req, res) => {
+        try {
+            // todo: сделать проверку на админа
+            if (true) {
+                const errors = validationResult(req);
+                if (!errors.isEmpty()) {
+                    return res.status(400).json({
+                        error: {
+                            message: "INVALID_DATA",
+                            code: 400,
+                            errors: errors.array()
+                        }
+                    });
+                }
+
+                const foundCategory = await Category.findById(
+                    req.body.category
+                );
+
+                const newProduct = await Product.create({
+                    ...req.body,
+                    category: foundCategory._id
+                });
+
+                res.status(201).send(newProduct);
+            } else {
+                res.status(401).json({
+                    error: {
+                        message: "UNAUTHORIZED",
+                        code: 401
+                    }
+                });
+            }
+        } catch (error) {
+            res.status(500).json({
+                message: "На сервере произошла ошибка. Попробуйте позже"
+            });
+        }
+    }
+]);
+
+router.delete("/:productId", auth, async (req, res) => {
+    try {
+        // todo: сделать проверку на админа
+        if (true) {
+            const { productId } = req.params;
+            const removedProduct = await Product.findById(productId);
+
+            // todo: не просто удалять: либо удалять во всех корзинах, либо просто добавлять isDeleted: true
+            await removedProduct.remove();
+
+            return res.send(null);
+        } else {
+            res.status(401).json({
+                error: {
+                    message: "UNAUTHORIZED",
+                    code: 401
+                }
+            });
+        }
     } catch (error) {
         res.status(500).json({
             message: "На сервере произошла ошибка. Попробуйте позже"

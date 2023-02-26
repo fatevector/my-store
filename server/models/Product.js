@@ -7,12 +7,12 @@ const schema = new Schema(
             required: true
         },
         definition: {
-            type: String,
-            required: true
+            type: String
         },
         image: {
             type: String,
-            required: true
+            required: true,
+            default: "https://cdn-icons-png.flaticon.com/512/1867/1867848.png"
         },
         popular: {
             type: Boolean,
