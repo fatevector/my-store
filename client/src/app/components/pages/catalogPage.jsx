@@ -14,10 +14,11 @@ const CatalogPage = () => {
     const dispatch = useDispatch();
     const productsList = useSelector(getProductsList());
     const categoriesList = useSelector(getCategoriesList());
-    const [selectedCategory, setSelectedCategory] = useState({
-        id: 0,
-        name: "Популярное"
-    });
+    const categories = useSelector(getCategoriesList());
+    const popularCategory = categories.find(
+        category => category.name === "Популярное"
+    );
+    const [selectedCategory, setSelectedCategory] = useState(popularCategory);
     // const [searchRequest, setSearchRequest] = useState(undefined);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 3;
@@ -28,10 +29,7 @@ const CatalogPage = () => {
     };
 
     const handleClearFilter = () => {
-        setSelectedCategory({
-            id: 0,
-            name: "Популярное"
-        });
+        setSelectedCategory(popularCategory);
         setCurrentPage(1);
         // setFilter(undefined);
         // setSearchRequest(undefined);
@@ -45,11 +43,12 @@ const CatalogPage = () => {
         if (selectedCategory !== undefined) {
             setCurrentPage(1);
             // setSearchRequest(undefined);
-            dispatch(loadProductsList(selectedCategory.id));
+            dispatch(loadProductsList(selectedCategory));
             // setFilter({
-            //     rule: product => product.category === selectedCategory.id
+            //     rule: product => product.category === selectedCategory._id
             // });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCategory]);
 
     return (

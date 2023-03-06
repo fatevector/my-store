@@ -44,7 +44,7 @@ const currentProductRequestFailed = createAction(
 );
 
 export const loadProductsList =
-    (category = "popular", page, limit) =>
+    (category = { name: "Популярное" }, page, limit) =>
     async dispatch => {
         dispatch(productsRequested());
         try {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { validator } from "../../utils/validator";
 import { useDispatch, useSelector } from "react-redux";
-// import { signUp } from "../../store/auth";
+import { signUp } from "../../store/auth";
 
 import TextField from "../common/textField";
 
@@ -73,8 +73,7 @@ const RegistrationForm = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        // dispatch(signUp(data));
-        console.log(data);
+        dispatch(signUp(data));
     };
 
     return (

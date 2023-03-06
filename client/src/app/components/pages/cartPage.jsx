@@ -1,28 +1,26 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { getCurrentUserData, getDataStatus } from "../../store/auth";
-import { getCart, loadCart } from "../../store/cart";
+import { getCart } from "../../store/cart";
 
 import ProductCartCard from "../ui/productCartCard";
 
 const CartPage = () => {
-    const dispatch = useDispatch();
-    const currentUserData = useSelector(getCurrentUserData());
-    const currentUserDataStatus = useSelector(getDataStatus());
     const cart = useSelector(getCart());
-
-    useEffect(() => {
-        if (currentUserDataStatus)
-            dispatch(loadCart(currentUserData.cart.map(item => item.id)));
-    }, [currentUserDataStatus]);
 
     return (
         <div className="m-3">
             <h1>Корзина</h1>
-            {cart.map(product => (
-                <ProductCartCard key={product.id} product={product} />
-            ))}
+            {cart.length !== 0 ? (
+                cart.map(product => (
+                    <ProductCartCard
+                        key={product._id}
+                        product={product}
+                        onCartPage={true}
+                    />
+                ))
+            ) : (
+                <p className="mt-3">Вы еще ничего сюда не положили</p>
+            )}
         </div>
     );
 };

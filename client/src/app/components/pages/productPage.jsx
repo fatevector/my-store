@@ -13,7 +13,7 @@ const ProductPage = ({ id }) => {
         dispatch(loadProductById(id));
     }, [id]);
 
-    if (!product || product.id != id) return "Loading...";
+    if (!product || product._id != id) return "Loading...";
 
     return (
         <div className="m-3">

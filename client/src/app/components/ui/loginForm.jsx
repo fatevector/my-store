@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { validator } from "../../utils/validator";
-import { getAuthErrors } from "../../store/auth";
+import { getAuthErrors, logIn } from "../../store/auth";
 
 import TextField from "../common/textField";
 
@@ -58,8 +58,7 @@ const LoginForm = () => {
         const redirect = history.location.state
             ? history.location.state.from.pathname
             : "/";
-        // dispatch(logIn({ payload: data, redirect }));
-        console.log({ payload: data, redirect });
+        dispatch(logIn({ payload: data, redirect }));
     };
 
     return (

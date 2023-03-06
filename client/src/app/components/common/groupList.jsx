@@ -2,7 +2,7 @@ import React from "react";
 
 const GroupList = ({
     items,
-    valueProperty = "id",
+    valueProperty = "_id",
     contentProperty = "name",
     onItemSelect,
     selectedItem
@@ -14,7 +14,7 @@ const GroupList = ({
                     key={items[item][valueProperty]}
                     className={
                         "list-group-item" +
-                        (items[item].id === selectedItem.id ? " active" : "")
+                        (items[item]._id === selectedItem._id ? " active" : "")
                     }
                     onClick={() => onItemSelect(items[item])}
                     role="button"

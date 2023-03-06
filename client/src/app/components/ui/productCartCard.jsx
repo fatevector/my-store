@@ -1,13 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import history from "../../utils/history";
-import { getCurrentUserData } from "../../store/auth";
+import { getCurrentUserData, getDataStatus } from "../../store/auth";
 import { addProductToCart, removeProductFromCart } from "../../store/cart";
 
-const ProductCartCard = ({ product }) => {
+const ProductCartCard = ({ product, onCartPage = false }) => {
     const dispatch = useDispatch();
     const currentUserData = useSelector(getCurrentUserData());
-    const inCart = currentUserData.cart.find(p => p.id === product.id);
+    const currentUserDataStatus = useSelector(getDataStatus());
+    const inCart = currentUserDataStatus
+        ? currentUserData.cart.find(p => p.productId === product._id)
+        : false;
 
     const handleNavToCart = () => {
         history.push("/cart");
@@ -36,16 +39,18 @@ const ProductCartCard = ({ product }) => {
                     <>
                         <button
                             className="btn btn-lg btn-danger me-2 mb-2"
-                            onClick={() => handleRemoveFromCart(product.id)}
+                            onClick={() => handleRemoveFromCart(product._id)}
                         >
                             Удалить из корзины
                         </button>
-                        <button
-                            className="btn btn-lg btn-primary me-2 mb-2"
-                            onClick={handleNavToCart}
-                        >
-                            Перейти к корзине
-                        </button>
+                        {!onCartPage && (
+                            <button
+                                className="btn btn-lg btn-primary me-2 mb-2"
+                                onClick={handleNavToCart}
+                            >
+                                Перейти к корзине
+                            </button>
+                        )}
                     </>
                 ) : (
                     <button

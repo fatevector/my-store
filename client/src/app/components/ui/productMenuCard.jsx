@@ -9,7 +9,7 @@ const ProductMenuCard = ({ product }) => {
             <div
                 className="card"
                 role="button"
-                onClick={() => handleNavToProductPage(product.id)}
+                onClick={() => handleNavToProductPage(product._id)}
             >
                 <div>
                     <img

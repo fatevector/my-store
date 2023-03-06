@@ -36,11 +36,12 @@ const cartSlice = createSlice({
             state.dataLoaded = false;
         },
         productAdded: (state, action) => {
+            if (!state.entities) state.entities = [];
             state.entities.push(action.payload);
         },
         productRemoved: (state, action) => {
             state.entities = state.entities.filter(
-                product => product.id != action.payload
+                product => product._id != action.payload
             );
         }
     }
@@ -85,7 +86,7 @@ export const resetCart = () => async (dispatch, getState) => {
 export const addProductToCart = product => async (dispatch, getState) => {
     dispatch(productAddRequested());
     try {
-        dispatch(addProductToUserCart({ id: product.id, quantity: 1 }));
+        dispatch(addProductToUserCart({ productId: product._id, quantity: 1 }));
         dispatch(productAdded(product));
     } catch (error) {
         dispatch(productAddRequestFailed(error.message));
