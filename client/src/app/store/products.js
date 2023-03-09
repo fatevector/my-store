@@ -24,6 +24,11 @@ const productsSlice = createSlice({
         },
         currentProductReceived: (state, action) => {
             state.currentProduct = action.payload;
+        },
+        productDeleted: (state, action) => {
+            state.entities = state.entities.filter(
+                product => product._id !== action.payload
+            );
         }
     }
 });
@@ -33,7 +38,8 @@ const {
     productsRequested,
     productsReceived,
     productsRequestFailed,
-    currentProductReceived
+    currentProductReceived,
+    productDeleted
 } = actions;
 
 const currentProductRequested = createAction(
@@ -42,6 +48,8 @@ const currentProductRequested = createAction(
 const currentProductRequestFailed = createAction(
     "products/currentProductRequestFailed"
 );
+const productDeleteRequested = createAction("products/productDeleteRequested");
+const productDeleteFailed = createAction("products/productDeleteFailed");
 
 export const loadProductsList =
     (category = { name: "Популярное" }, page, limit) =>
@@ -66,6 +74,16 @@ export const loadProductById = id => async (dispatch, getState) => {
         dispatch(currentProductReceived(content));
     } catch (error) {
         dispatch(currentProductRequestFailed(error.message));
+    }
+};
+
+export const deleteProductById = id => async (dispatch, getState) => {
+    dispatch(productDeleteRequested());
+    try {
+        const { content } = await productService.deleteById(id);
+        dispatch(productDeleted(id));
+    } catch (error) {
+        dispatch(productDeleteFailed(error.message));
     }
 };
 

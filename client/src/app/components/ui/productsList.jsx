@@ -1,10 +1,8 @@
-import ProductMenuCard from "./productMenuCard";
-
-const ProductsList = ({ productsList }) => {
+const ProductsList = ({ productsList, component: Component }) => {
     return (
         <div className="row row-cols-auto g-3">
             {productsList.map(product => (
-                <ProductMenuCard key={product._id} product={product} />
+                <Component key={product._id} product={product} />
             ))}
         </div>
     );

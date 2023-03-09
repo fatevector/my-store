@@ -170,6 +170,8 @@ export const getDataStatus = () => state => state.auth.dataLoaded;
 
 export const getCurrentUserId = () => state => state.auth.auth?.userId;
 
+export const getUserRole = () => state => state.auth.user?.role;
+
 export const getUserLoadingStatus = () => state => state.auth.isLoading;
 
 export const getCurrentUserData = () => state => state.auth.user;

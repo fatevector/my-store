@@ -8,10 +8,10 @@ import paginate from "../../utils/paginate";
 import GroupList from "../common/groupList";
 import ProductsList from "../ui/productsList";
 import Pagination from "../common/pagination";
-import ProductMenuCard from "../ui/productMenuCard";
+import ProductCartCard from "../ui/productCartCard";
 // import SearchField from "../common/searchField";
 
-const CatalogPage = () => {
+const AdminPage = () => {
     const dispatch = useDispatch();
     const productsList = useSelector(getProductsList());
     const categoriesList = useSelector(getCategoriesList());
@@ -39,6 +39,18 @@ const CatalogPage = () => {
     const handlePageChange = pageIndex => {
         setCurrentPage(pageIndex);
     };
+
+    const handleCreateProduct = () => {
+        console.log("Реализуй handleCreateProduct");
+    };
+
+    useEffect(() => {
+        if (
+            productsList &&
+            currentPage > Math.ceil(productsList.length / pageSize)
+        )
+            setCurrentPage(prevState => prevState - 1);
+    }, [productsList]);
 
     useEffect(() => {
         if (selectedCategory !== undefined) {
@@ -78,25 +90,41 @@ const CatalogPage = () => {
                             onChange={handleSearchChange}
                             placeholder="Поиск..."
                         /> */}
-                            <ProductsList
-                                productsList={paginate(
-                                    productsList,
-                                    currentPage,
-                                    pageSize
-                                )}
-                                component={ProductMenuCard}
-                            />
-                            {/* <div className="d-flex justify-content-center "> */}
-                            <div className="row">
-                                <div className="col-12 g-3 d-flex justify-content-center">
-                                    <Pagination
-                                        itemsCount={productsList.length}
-                                        pageSize={pageSize}
-                                        currentPage={currentPage}
-                                        onPageChange={handlePageChange}
+                            <button
+                                className="btn btn-light border border-primary py-3 mb-3 fs-2"
+                                onClick={handleCreateProduct}
+                            >
+                                +
+                            </button>
+                            {productsList.length !== 0 ? (
+                                <>
+                                    <ProductsList
+                                        productsList={paginate(
+                                            productsList,
+                                            currentPage,
+                                            pageSize
+                                        )}
+                                        component={props => (
+                                            <ProductCartCard
+                                                onAdminPage={true}
+                                                {...props}
+                                            />
+                                        )}
                                     />
-                                </div>
-                            </div>
+                                    <div className="row">
+                                        <div className="col-12 g-3 d-flex justify-content-center">
+                                            <Pagination
+                                                itemsCount={productsList.length}
+                                                pageSize={pageSize}
+                                                currentPage={currentPage}
+                                                onPageChange={handlePageChange}
+                                            />
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <h3>В данной категории нет товаров</h3>
+                            )}
                         </>
                     ) : (
                         <h1>Loading...</h1>
@@ -107,4 +135,4 @@ const CatalogPage = () => {
     );
 };
 
-export default CatalogPage;
+export default AdminPage;

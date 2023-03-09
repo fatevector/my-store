@@ -4,6 +4,7 @@ const { check, validationResult } = require("express-validator");
 const Product = require("../models/Product");
 const auth = require("../middleware/auth.middleware");
 const Category = require("../models/Category");
+const User = require("../models/User");
 
 const router = express.Router({ mergeParams: true });
 
@@ -48,8 +49,8 @@ router.post("/", auth, [
     check("price", "Стоимость товара не может отсутствовать").exists(),
     async (req, res) => {
         try {
-            // todo: сделать проверку на админа
-            if (true) {
+            const foundUser = await User.findById(req.user._id);
+            if (foundUser && foundUser.role === "admin") {
                 const errors = validationResult(req);
                 if (!errors.isEmpty()) {
                     return res.status(400).json({
@@ -89,8 +90,8 @@ router.post("/", auth, [
 
 router.delete("/:productId", auth, async (req, res) => {
     try {
-        // todo: сделать проверку на админа
-        if (true) {
+        const foundUser = await User.findById(req.user._id);
+        if (foundUser && foundUser.role === "admin") {
             const { productId } = req.params;
             const removedProduct = await Product.findById(productId);
 
@@ -112,5 +113,7 @@ router.delete("/:productId", auth, async (req, res) => {
         });
     }
 });
+
+// todo: patch
 
 module.exports = router;

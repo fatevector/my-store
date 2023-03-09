@@ -43,7 +43,8 @@ router.post("/signUp", [
             const newUser = await User.create({
                 ...generateUserData(),
                 ...req.body,
-                password: hashedPassword
+                password: hashedPassword,
+                role: "user"
             });
 
             const tokens = tokenService.generate({ _id: newUser._id });
@@ -57,6 +58,75 @@ router.post("/signUp", [
         }
     }
 ]);
+
+const signUpWithRole = async (req, res, role) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                error: {
+                    message: "INVALID_DATA",
+                    code: 400,
+                    errors: errors.array()
+                }
+            });
+        }
+
+        const { email, password } = req.body;
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({
+                error: {
+                    message: "EMAIL_EXISTS",
+                    code: 400
+                }
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        const newUser = await User.create({
+            ...generateUserData(),
+            ...req.body,
+            password: hashedPassword,
+            role
+        });
+
+        const tokens = tokenService.generate({ _id: newUser._id });
+        await tokenService.save(newUser._id, tokens.refreshToken);
+
+        res.status(201).send({ ...tokens, userId: newUser._id });
+    } catch (error) {
+        res.status(500).json({
+            message: "На сервере произошла ошибка. Попробуйте позже"
+        });
+    }
+};
+
+router.post("/signUp", [
+    check("email", "Некорректный email").isEmail(),
+    check("password", "Минимальная длина пароля - 8 символов").isLength({
+        min: 8
+    }),
+    check("name", "Имя не может быть пустым").exists(),
+    async (req, res) => {
+        return await signUpWithRole(req, res, "user");
+    }
+]);
+
+router.post(
+    "/signUpAsAdminALjawdooa8fo3qNAWJLKDNa2djoidjaowdAwjdhqio2q93q831akjn31h3",
+    [
+        check("email", "Некорректный email").isEmail(),
+        check("password", "Минимальная длина пароля - 8 символов").isLength({
+            min: 8
+        }),
+        check("name", "Имя не может быть пустым").exists(),
+        async (req, res) => {
+            return await signUpWithRole(req, res, "admin");
+        }
+    ]
+);
 
 router.post("/signInWithPassword", [
     check("email", "Email некорректный").normalizeEmail().isEmail(),

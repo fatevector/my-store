@@ -24,6 +24,10 @@ const productService = {
         );
         const data = { content: dataList.map(item => item.data.content) };
         return data;
+    },
+    deleteById: async id => {
+        const { data } = await httpService.delete(productEndpoint + id);
+        return data;
     }
 };
 
