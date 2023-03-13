@@ -18,12 +18,14 @@ const AppLoader = ({ children }) => {
     const userId = useSelector(getCurrentUserId());
     const categoriesStatusLoading = useSelector(getCategoriesLoadingStatus());
     const userDataIsLoaded = useSelector(getDataStatus());
+
     useEffect(() => {
         dispatch(loadCategoriesList());
         if (isLoggedIn && !userDataIsLoaded) {
             dispatch(loadUser(userId));
         }
-    }, [isLoggedIn, userDataIsLoaded]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoggedIn, userDataIsLoaded, userId]);
 
     if (categoriesStatusLoading || (isLoggedIn && !userDataIsLoaded))
         return "Loading...";

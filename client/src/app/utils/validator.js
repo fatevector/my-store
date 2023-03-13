@@ -6,6 +6,8 @@ export const validator = (data, config) => {
             case "isRequired": {
                 if (typeof data === "boolean") {
                     validationFailed = !data;
+                } else if (typeof data === "number") {
+                    validationFailed = !data;
                 } else {
                     validationFailed = data.trim() === "";
                 }
@@ -24,6 +26,11 @@ export const validator = (data, config) => {
             case "isDigit": {
                 const digitRegExp = /\d+/g;
                 validationFailed = !digitRegExp.test(data);
+                break;
+            }
+            case "isPrice": {
+                const priceRegExp = /^\d+([.,](\d){1,2})?$/g;
+                validationFailed = !priceRegExp.test(data);
                 break;
             }
             case "minLength": {

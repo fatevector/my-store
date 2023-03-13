@@ -3,9 +3,11 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { getCurrentUserData } from "../../store/auth";
+import { useTheme } from "../hooks/useTheme";
 
 const NavProfile = () => {
     const currentUser = useSelector(getCurrentUserData());
+    const { toggleTheme } = useTheme();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -29,6 +31,10 @@ const NavProfile = () => {
                 <Link to={`/profile`} className="dropdown-item">
                     Профиль
                 </Link>
+                {/* todo: Проверить смену темы */}
+                <button className="dropdown-item" onClick={toggleTheme}>
+                    Сменить тему
+                </button>
                 <Link to="/logout" className="dropdown-item">
                     Выйти
                 </Link>

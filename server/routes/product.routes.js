@@ -66,8 +66,13 @@ router.post("/", auth, [
                     req.body.category
                 );
 
+                const image = req.body?.image
+                    ? req.body.image
+                    : "https://cdn-icons-png.flaticon.com/512/1867/1867848.png";
+
                 const newProduct = await Product.create({
                     ...req.body,
+                    image,
                     category: foundCategory._id
                 });
 
@@ -114,6 +119,34 @@ router.delete("/:productId", auth, async (req, res) => {
     }
 });
 
-// todo: patch
+// todo: Проверить patch
+
+router.patch("/:productId", auth, async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const foundUser = await User.findById(req.user._id);
+        if (foundUser && foundUser.role === "admin") {
+            const updatedProduct = await Product.findByIdAndUpdate(
+                productId,
+                req.body,
+                {
+                    new: true
+                }
+            );
+            res.send(updatedProduct);
+        } else {
+            res.status(401).json({
+                error: {
+                    message: "UNAUTHORIZED",
+                    code: 401
+                }
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: "На сервере произошла ошибка. Попробуйте позже"
+        });
+    }
+});
 
 module.exports = router;

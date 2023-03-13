@@ -1,6 +1,7 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 
 import productService from "../services/product.service";
+import history from "../utils/history";
 
 const productsSlice = createSlice({
     name: "products",
@@ -29,6 +30,19 @@ const productsSlice = createSlice({
             state.entities = state.entities.filter(
                 product => product._id !== action.payload
             );
+        },
+        productCreated: (state, action) => {
+            if (!state.entities) state.entities = [];
+            state.entities.push(action.payload);
+        },
+        productUpdated: (state, action) => {
+            state.currentProduct = action.payload;
+            if (state.entities) {
+                const index = state.entities.findIndex(
+                    p => p._id === action.payload._id
+                );
+                if (index !== -1) state.entities[index] = action.payload;
+            }
         }
     }
 });
@@ -39,7 +53,9 @@ const {
     productsReceived,
     productsRequestFailed,
     currentProductReceived,
-    productDeleted
+    productDeleted,
+    productCreated,
+    productUpdated
 } = actions;
 
 const currentProductRequested = createAction(
@@ -50,6 +66,10 @@ const currentProductRequestFailed = createAction(
 );
 const productDeleteRequested = createAction("products/productDeleteRequested");
 const productDeleteFailed = createAction("products/productDeleteFailed");
+const productCreateRequested = createAction("products/productCreateRequested");
+const productCreateFailed = createAction("products/productCreateFailed");
+const productUpdateRequested = createAction("products/productUpdateRequested");
+const productUpdateFailed = createAction("products/productUpdateFailed");
 
 export const loadProductsList =
     (category = { name: "Популярное" }, page, limit) =>
@@ -81,11 +101,38 @@ export const deleteProductById = id => async (dispatch, getState) => {
     dispatch(productDeleteRequested());
     try {
         const { content } = await productService.deleteById(id);
-        dispatch(productDeleted(id));
+        if (!content) dispatch(productDeleted(id));
     } catch (error) {
         dispatch(productDeleteFailed(error.message));
     }
 };
+
+// todo: Проверить create, update
+
+export const createProduct =
+    (payload, redirect) => async (dispatch, getState) => {
+        dispatch(productCreateRequested());
+        try {
+            const { content } = await productService.create(payload);
+            dispatch(productCreated(content));
+            history.push(redirect);
+        } catch (error) {
+            dispatch(productCreateFailed(error.message));
+        }
+    };
+
+export const updateProduct =
+    (payload, redirect) => async (dispatch, getState) => {
+        dispatch(productUpdateRequested());
+        try {
+            const { content } = await productService.update(payload);
+            dispatch(productUpdated(content));
+            history.push(redirect);
+        } catch (error) {
+            console.log(error.message);
+            dispatch(productUpdateFailed(error.message));
+        }
+    };
 
 export const getProductsList = () => state => state.products.entities;
 

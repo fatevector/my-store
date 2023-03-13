@@ -11,12 +11,12 @@ const schema = new Schema(
         },
         image: {
             type: String,
-            required: true,
+            required: false,
             default: "https://cdn-icons-png.flaticon.com/512/1867/1867848.png"
         },
         popular: {
             type: Boolean,
-            required: true,
+            required: false,
             default: false
         },
         category: {

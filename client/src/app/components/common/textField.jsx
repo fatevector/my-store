@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 
 const TextField = ({
     label,
-    type,
+    type = "text",
     name,
     value,
     onChange,
@@ -52,20 +51,6 @@ const TextField = ({
             </div>
         </div>
     );
-};
-
-TextField.defaultProps = {
-    type: "text"
-};
-
-TextField.propTypes = {
-    label: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    error: PropTypes.string,
-    placeholder: PropTypes.string
 };
 
 export default TextField;

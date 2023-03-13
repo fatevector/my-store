@@ -30,7 +30,7 @@ const ProductCartCard = ({
     };
 
     const handleEditProduct = id => {
-        console.log("Реалихуй handleEditProduct!", id);
+        history.push("/admin/edit/" + id);
     };
 
     const handleDeleteProduct = id => {

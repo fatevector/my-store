@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import configFile from "../../config.json";
+import history from "../utils/history";
 import authService from "./auth.service";
 import {
     getRefreshToken,
@@ -39,8 +40,12 @@ http.interceptors.request.use(
             }
         } else {
             if (isExpired) {
-                const data = await authService.refresh();
-                setTokens(data);
+                try {
+                    const data = await authService.refresh();
+                    setTokens(data);
+                } catch (error) {
+                    history.push("/login");
+                }
             }
             const accessToken = getAccessToken();
             if (accessToken) {

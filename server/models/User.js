@@ -17,13 +17,13 @@ const schema = new Schema(
         },
         image: {
             type: String,
-            required: true,
+            required: false,
             default:
                 "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
         },
         role: {
             type: String,
-            required: true,
+            required: false,
             default: "user"
         },
         cart: [

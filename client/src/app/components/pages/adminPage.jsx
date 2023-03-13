@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesList } from "../../store/categories";
 import { getProductsList, loadProductsList } from "../../store/products";
 import paginate from "../../utils/paginate";
+import history from "../../utils/history";
 
 import GroupList from "../common/groupList";
 import ProductsList from "../ui/productsList";
@@ -41,7 +42,7 @@ const AdminPage = () => {
     };
 
     const handleCreateProduct = () => {
-        console.log("Реализуй handleCreateProduct");
+        history.push("/admin/create");
     };
 
     useEffect(() => {
@@ -50,6 +51,8 @@ const AdminPage = () => {
             currentPage > Math.ceil(productsList.length / pageSize)
         )
             setCurrentPage(prevState => prevState - 1);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productsList]);
 
     useEffect(() => {

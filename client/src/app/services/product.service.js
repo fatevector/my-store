@@ -28,6 +28,18 @@ const productService = {
     deleteById: async id => {
         const { data } = await httpService.delete(productEndpoint + id);
         return data;
+    },
+    // todo: Проверить create, update
+    create: async payload => {
+        const { data } = await httpService.post(productEndpoint, payload);
+        return data;
+    },
+    update: async payload => {
+        const { data } = await httpService.patch(
+            productEndpoint + payload._id,
+            payload
+        );
+        return data;
     }
 };
 

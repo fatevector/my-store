@@ -3,14 +3,19 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { getIsLoggedIn, getUserRole } from "../../store/auth";
+import { useTheme } from "../hooks/useTheme";
+
 import NavProfile from "./navProfile";
 
 const NavBar = () => {
     const isLoggedIng = useSelector(getIsLoggedIn());
     const userRole = useSelector(getUserRole());
+    const { theme } = useTheme();
 
     return (
-        <nav className="navbar bg-light mb-3 border border-secondary-subtle">
+        <nav
+            className={`navbar bg-${theme} mb-3 border border-secondary-subtle`}
+        >
             <div className="container-fluid">
                 <ul className="nav">
                     <li className="nav-item">

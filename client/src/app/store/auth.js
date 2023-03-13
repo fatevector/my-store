@@ -79,6 +79,12 @@ const {
 const userUpdateRequested = createAction("users/userUpdateRequested");
 const updateUserFailed = createAction("users/updateUserFailed");
 
+export const logOut = () => dispatch => {
+    localStorageService.removeAuthData();
+    dispatch(userLoggedOut());
+    history.push("/");
+};
+
 export const loadUser = id => async dispatch => {
     dispatch(userRequested());
     try {
@@ -86,6 +92,7 @@ export const loadUser = id => async dispatch => {
         dispatch(userReceived(content));
     } catch (error) {
         dispatch(userRequestFailed(error.message));
+        dispatch(logOut());
     }
 };
 
@@ -97,6 +104,12 @@ export const logIn =
         try {
             const data = await authService.login({ email, password });
             dispatch(authRequestSuccess({ userId: data.userId }));
+
+            console.log(
+                localStorageService.getRefreshToken(),
+                data.refreshToken
+            );
+
             localStorageService.setTokens(data);
             history.push(redirect);
         } catch (error) {
@@ -110,16 +123,13 @@ export const logIn =
         }
     };
 
-export const logOut = () => dispatch => {
-    localStorageService.removeAuthData();
-    dispatch(userLoggedOut());
-    history.push("/");
-};
-
 export const signUp = payload => async dispatch => {
     dispatch(authRequested());
     try {
         const data = await authService.register(payload);
+
+        console.log(localStorageService.getRefreshToken(), data.refreshToken);
+
         localStorageService.setTokens(data);
         dispatch(authRequestSuccess({ userId: data.userId }));
         history.push("/users");
@@ -152,7 +162,7 @@ export const removeProductFromUserCart = id => async (dispatch, getState) => {
     dispatch(userUpdateRequested());
     try {
         const currentUser = getState().auth.user;
-        const newCartData = currentUser.cart.filter(p => p.productId != id);
+        const newCartData = currentUser.cart.filter(p => p.productId !== id);
         const newUserData = {
             ...currentUser,
             cart: newCartData
