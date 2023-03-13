@@ -11,9 +11,11 @@ const ProductPage = ({ id }) => {
 
     useEffect(() => {
         dispatch(loadProductById(id));
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
-    if (!product || product._id != id) return "Loading...";
+    if (!product || product._id !== id) return "Loading...";
 
     return (
         <div className="m-3">

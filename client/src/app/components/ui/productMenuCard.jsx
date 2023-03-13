@@ -1,13 +1,15 @@
 import history from "../../utils/history";
+import { useTheme } from "../hooks/useTheme";
 
 const ProductMenuCard = ({ product }) => {
+    const { theme } = useTheme();
     const handleNavToProductPage = id => {
         history.push(`/product/${id}`);
     };
     return (
         <div className="col-4">
             <div
-                className="card"
+                className={"card " + theme}
                 role="button"
                 onClick={() => handleNavToProductPage(product._id)}
             >

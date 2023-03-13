@@ -4,12 +4,14 @@ import history from "../../utils/history";
 import { getCurrentUserData, getDataStatus } from "../../store/auth";
 import { addProductToCart, removeProductFromCart } from "../../store/cart";
 import { deleteProductById } from "../../store/products";
+import { useTheme } from "../hooks/useTheme";
 
 const ProductCartCard = ({
     product,
     onCartPage = false,
     onAdminPage = false
 }) => {
+    const { theme } = useTheme();
     const dispatch = useDispatch();
     const currentUserData = useSelector(getCurrentUserData());
     const currentUserDataStatus = useSelector(getDataStatus());
@@ -38,7 +40,7 @@ const ProductCartCard = ({
     };
 
     return (
-        <div className="card mb-3 d-flex flex-row ps-0">
+        <div className={`card mb-3 d-flex flex-row ps-0 ${theme}`}>
             <img
                 className="rounded-start"
                 src={product.image}

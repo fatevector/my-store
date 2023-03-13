@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { validator } from "../../utils/validator";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signUp } from "../../store/auth";
 
 import TextField from "../common/textField";
@@ -67,6 +67,8 @@ const RegistrationForm = () => {
 
     useEffect(() => {
         validate();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
     const handleSubmit = e => {

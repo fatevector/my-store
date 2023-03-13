@@ -17,6 +17,8 @@ const Cart = () => {
             dispatch(
                 loadCart(currentUserData.cart.map(item => item.productId))
             );
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUserDataStatus]);
 
     if (!cartDataStatus) return "Loading...";

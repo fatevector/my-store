@@ -41,7 +41,7 @@ const cartSlice = createSlice({
         },
         productRemoved: (state, action) => {
             state.entities = state.entities.filter(
-                product => product._id != action.payload
+                product => product._id !== action.payload
             );
         }
     }

@@ -49,6 +49,8 @@ const LoginForm = () => {
 
     useEffect(() => {
         validate();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
     const handleSubmit = e => {

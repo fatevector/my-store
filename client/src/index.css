@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.dark {
+  background-color: #212529;
+}
+
+.card.dark {
+  background-color: #3a3f43;
+}
+
+.navbar.dark {
+  /* color: #fff; */
+  --bs-btn-color: #fff;
+}

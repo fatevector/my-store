@@ -94,7 +94,6 @@ const ProductEditingPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [product]);
 
-    console.log("rerender");
     if (!product || product._id !== productId || !data) return "Loading...";
 
     return (

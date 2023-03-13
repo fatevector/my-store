@@ -7,7 +7,7 @@ import { useTheme } from "../hooks/useTheme";
 
 const NavProfile = () => {
     const currentUser = useSelector(getCurrentUserData());
-    const { toggleTheme } = useTheme();
+    const { theme, toggleTheme } = useTheme();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -19,7 +19,7 @@ const NavProfile = () => {
     return (
         <div className="dropdown" onClick={toggleMenu}>
             <div className="btn dropdown-toggle d-flex align-items-center">
-                <div className="me-2">{currentUser.name}</div>
+                <div className={"me-2 text " + theme}>{currentUser.name}</div>
                 <img
                     src={currentUser.image}
                     alt=""
@@ -31,7 +31,6 @@ const NavProfile = () => {
                 <Link to={`/profile`} className="dropdown-item">
                     Профиль
                 </Link>
-                {/* todo: Проверить смену темы */}
                 <button className="dropdown-item" onClick={toggleTheme}>
                     Сменить тему
                 </button>

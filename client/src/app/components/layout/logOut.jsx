@@ -7,6 +7,8 @@ const LogOut = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(logOut());
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return <h1>Loading...</h1>;
 };

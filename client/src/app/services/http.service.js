@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import configFile from "../../config.json";
-import history from "../utils/history";
+// import history from "../utils/history";
 import authService from "./auth.service";
 import {
     getRefreshToken,
@@ -44,7 +44,7 @@ http.interceptors.request.use(
                     const data = await authService.refresh();
                     setTokens(data);
                 } catch (error) {
-                    history.push("/login");
+                    // history.push("/login");
                 }
             }
             const accessToken = getAccessToken();

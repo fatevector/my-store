@@ -13,9 +13,7 @@ const NavBar = () => {
     const { theme } = useTheme();
 
     return (
-        <nav
-            className={`navbar bg-${theme} mb-3 border border-secondary-subtle`}
-        >
+        <nav className={`navbar ${theme} mb-3 border border-secondary-subtle`}>
             <div className="container-fluid">
                 <ul className="nav">
                     <li className="nav-item">
