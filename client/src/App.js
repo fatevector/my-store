@@ -15,7 +15,7 @@ function App() {
     const { theme } = useTheme();
 
     return (
-        <div className={`App ${theme}`}>
+        <div className={`App ${theme}`} data-bs-theme={theme}>
             <NavBar />
             <Switch>
                 <Route exact path="/" component={Catalog} />

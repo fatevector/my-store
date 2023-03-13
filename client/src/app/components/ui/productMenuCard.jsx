@@ -9,7 +9,7 @@ const ProductMenuCard = ({ product }) => {
     return (
         <div className="col-4">
             <div
-                className={"card " + theme}
+                className="card text-body bg-body"
                 role="button"
                 onClick={() => handleNavToProductPage(product._id)}
             >

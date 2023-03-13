@@ -17,9 +17,12 @@ const NavProfile = () => {
 
     if (!currentUser) return "Loading...";
     return (
-        <div className="dropdown" onClick={toggleMenu}>
-            <div className="btn dropdown-toggle d-flex align-items-center">
-                <div className={"me-2 text " + theme}>{currentUser.name}</div>
+        <div className="dropdown" data-bs-theme={theme} onClick={toggleMenu}>
+            <div
+                className="btn dropdown-toggle d-flex align-items-center text-body bg-body"
+                data-bs-theme={theme}
+            >
+                <div className="me-2">{currentUser.name}</div>
                 <img
                     src={currentUser.image}
                     alt=""

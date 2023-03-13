@@ -5,6 +5,7 @@ import { getCategoriesList } from "../../store/categories";
 import { getProductsList, loadProductsList } from "../../store/products";
 import paginate from "../../utils/paginate";
 import history from "../../utils/history";
+import { useTheme } from "../hooks/useTheme";
 
 import GroupList from "../common/groupList";
 import ProductsList from "../ui/productsList";
@@ -13,6 +14,7 @@ import ProductCartCard from "../ui/productCartCard";
 // import SearchField from "../common/searchField";
 
 const AdminPage = () => {
+    const { theme } = useTheme();
     const dispatch = useDispatch();
     const productsList = useSelector(getProductsList());
     const categoriesList = useSelector(getCategoriesList());
@@ -84,7 +86,7 @@ const AdminPage = () => {
                         Очистить
                     </button>
                 </div>
-                <div className="d-flex flex-column container">
+                <div className="d-flex flex-column container me-3">
                     {productsList ? (
                         <>
                             {/* <SearchField
@@ -94,8 +96,9 @@ const AdminPage = () => {
                             placeholder="Поиск..."
                         /> */}
                             <button
-                                className="btn btn-light border border-primary py-3 mb-3 fs-2"
+                                className="btn border border-primary py-3 mb-3 fs-2 text-body bg-body"
                                 onClick={handleCreateProduct}
+                                data-bs-theme={theme}
                             >
                                 +
                             </button>

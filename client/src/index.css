@@ -13,14 +13,9 @@ code {
 }
 
 .dark {
-  background-color: #212529;
+  background-color: #26292c;
 }
 
-.card.dark {
+/* .card.dark {
   background-color: #3a3f43;
-}
-
-.navbar.dark {
-  /* color: #fff; */
-  --bs-btn-color: #fff;
-}
+} */

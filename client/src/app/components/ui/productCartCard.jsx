@@ -40,7 +40,7 @@ const ProductCartCard = ({
     };
 
     return (
-        <div className={`card mb-3 d-flex flex-row ps-0 ${theme}`}>
+        <div className="card mb-3 d-flex flex-row ps-0 text-body bg-body">
             <img
                 className="rounded-start"
                 src={product.image}
@@ -48,8 +48,10 @@ const ProductCartCard = ({
                 width="300"
             />
             <div className="card-body">
-                <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">{product.definition}</p>
+                <h5 className="card-title text-body bg-body">{product.name}</h5>
+                <p className="card-text text-body bg-body">
+                    {product.definition}
+                </p>
                 {!onAdminPage ? (
                     inCart ? (
                         <>
