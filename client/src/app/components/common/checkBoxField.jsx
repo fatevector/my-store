@@ -2,7 +2,7 @@ import React from "react";
 
 const CheckBoxField = ({ name, value, onChange, children, error }) => {
     const getCheckBoxClasses = () =>
-        "form-check-input" + (error ? " is-invalid" : "");
+        "form-check-input text-body bg-body" + (error ? " is-invalid" : "");
 
     const handleChange = () => {
         onChange({ name, value: !value });
@@ -18,7 +18,10 @@ const CheckBoxField = ({ name, value, onChange, children, error }) => {
                 checked={value}
                 onChange={handleChange}
             />
-            <label className="form-check-label" htmlFor={name}>
+            <label
+                className="form-check-label text-body bg-body"
+                htmlFor={name}
+            >
                 {children}
             </label>
             {error && <div className="invalid-feedback">{error}</div>}

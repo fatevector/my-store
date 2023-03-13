@@ -11,7 +11,8 @@ const TextField = ({
 }) => {
     const [showPassword, setShowPassword] = useState(false);
 
-    const getInputClasses = () => "form-control" + (error ? " is-invalid" : "");
+    const getInputClasses = () =>
+        "form-control text-body bg-body" + (error ? " is-invalid" : "");
 
     const toggleShowPassword = () => {
         setShowPassword(prevState => !prevState);
@@ -23,7 +24,11 @@ const TextField = ({
 
     return (
         <div className="mb-4">
-            {label && <label htmlFor={name}>{label}</label>}
+            {label && (
+                <label htmlFor={name} className="text-body bg-body">
+                    {label}
+                </label>
+            )}
             <div className="input-group has-validation">
                 <input
                     type={showPassword ? "text" : type}

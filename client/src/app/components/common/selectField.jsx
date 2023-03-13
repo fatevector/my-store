@@ -14,7 +14,8 @@ const SelectField = ({
             ? Object.values(options)
             : options;
 
-    const getSelectClasses = () => "form-select" + (error ? " is-invalid" : "");
+    const getSelectClasses = () =>
+        "form-select text-body bg-body" + (error ? " is-invalid" : "");
 
     const handleChange = ({ target }) => {
         onChange({ name: [target.name], value: target.value });
@@ -23,7 +24,7 @@ const SelectField = ({
     return (
         <div className="mb-4">
             {label && (
-                <label htmlFor={name} className="form-label">
+                <label htmlFor={name} className="form-label text-body bg-body">
                     {label}
                 </label>
             )}
