@@ -19,7 +19,7 @@ const NavProfile = () => {
     return (
         <div className="dropdown" data-bs-theme={theme} onClick={toggleMenu}>
             <div
-                className="btn dropdown-toggle d-flex align-items-center text-body bg-body"
+                className="btn dropdown-toggle d-flex align-items-center text-body"
                 data-bs-theme={theme}
             >
                 <div className="me-2">{currentUser.name}</div>

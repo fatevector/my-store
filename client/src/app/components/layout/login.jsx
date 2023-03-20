@@ -36,7 +36,7 @@ const Login = () => {
                         </>
                     ) : (
                         <>
-                            <h3 className="mb-4">Login</h3>
+                            <h3 className="mb-4">Вход</h3>
                             <LoginForm />
                             <p className="d-flex align-items-baseline">
                                 Нет аккаунта?

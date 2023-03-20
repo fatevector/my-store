@@ -9,6 +9,7 @@ import GroupList from "../common/groupList";
 import ProductsList from "../ui/productsList";
 import Pagination from "../common/pagination";
 import ProductMenuCard from "../ui/productMenuCard";
+import Loader from "../common/loader";
 // import SearchField from "../common/searchField";
 
 const CatalogPage = () => {
@@ -54,7 +55,7 @@ const CatalogPage = () => {
 
     return (
         <>
-            <h1 className="ms-3">Каталог</h1>
+            <h1 className="ms-3 ">Каталог</h1>
             <div className="d-flex">
                 <div className="d-flex flex-column flex-shink-0 px-3">
                     <GroupList
@@ -99,7 +100,7 @@ const CatalogPage = () => {
                             </div>
                         </>
                     ) : (
-                        <h1>Loading...</h1>
+                        <Loader />
                     )}
                 </div>
             </div>

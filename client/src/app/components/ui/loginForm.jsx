@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { validator } from "../../utils/validator";
+import history from "../../utils/history";
 import { getAuthErrors, logIn } from "../../store/auth";
 
 import TextField from "../common/textField";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const [data, setData] = useState({
         email: "",
         password: "",

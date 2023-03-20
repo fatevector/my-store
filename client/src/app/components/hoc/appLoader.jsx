@@ -12,6 +12,8 @@ import {
     loadUser
 } from "../../store/auth";
 
+import Loader from "../common/loader";
+
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(getIsLoggedIn());
@@ -28,7 +30,7 @@ const AppLoader = ({ children }) => {
     }, [isLoggedIn, userDataIsLoaded, userId]);
 
     if (categoriesStatusLoading || (isLoggedIn && !userDataIsLoaded))
-        return "Loading...";
+        return <Loader />;
     return children;
 };
 

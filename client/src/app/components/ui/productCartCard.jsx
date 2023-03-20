@@ -4,14 +4,12 @@ import history from "../../utils/history";
 import { getCurrentUserData, getDataStatus } from "../../store/auth";
 import { addProductToCart, removeProductFromCart } from "../../store/cart";
 import { deleteProductById } from "../../store/products";
-import { useTheme } from "../hooks/useTheme";
 
 const ProductCartCard = ({
     product,
     onCartPage = false,
     onAdminPage = false
 }) => {
-    const { theme } = useTheme();
     const dispatch = useDispatch();
     const currentUserData = useSelector(getCurrentUserData());
     const currentUserDataStatus = useSelector(getDataStatus());
@@ -52,6 +50,9 @@ const ProductCartCard = ({
                 <p className="card-text text-body bg-body">
                     {product.definition}
                 </p>
+                <h3 className="card-text text-body text-end">
+                    {product.price} руб.
+                </h3>
                 {!onAdminPage ? (
                     inCart ? (
                         <>

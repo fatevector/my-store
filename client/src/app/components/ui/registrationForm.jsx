@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import { validator } from "../../utils/validator";
-import { useDispatch } from "react-redux";
 import { signUp } from "../../store/auth";
 
 import TextField from "../common/textField";

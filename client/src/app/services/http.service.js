@@ -17,9 +17,9 @@ const http = axios.create({
 
 http.interceptors.request.use(
     async function (config) {
-        const expiresDate = getTokenExpiresDate();
-        const refreshToken = getRefreshToken();
-        const isExpired = refreshToken && expiresDate < Date.now();
+        let expiresDate = getTokenExpiresDate();
+        let refreshToken = getRefreshToken();
+        let isExpired = refreshToken && expiresDate < Date.now();
 
         if (configFile.isFakeServer) {
             const containSlash = /\/$/gi.test(config.url);
@@ -42,7 +42,10 @@ http.interceptors.request.use(
             if (isExpired) {
                 try {
                     const data = await authService.refresh();
-                    setTokens(data);
+                    expiresDate = getTokenExpiresDate();
+                    refreshToken = getRefreshToken();
+                    isExpired = refreshToken && expiresDate < Date.now();
+                    if (isExpired) setTokens(data);
                 } catch (error) {
                     // history.push("/login");
                 }

@@ -19,7 +19,7 @@ const CartPage = () => {
                     />
                 ))
             ) : (
-                <p className="mt-3">Вы еще ничего сюда не положили</p>
+                <p className="mt-3 text-body">Вы еще ничего сюда не положили</p>
             )}
         </div>
     );

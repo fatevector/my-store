@@ -18,11 +18,11 @@ root.render(
     <Router history={history}>
         <React.StrictMode>
             <Provider store={store}>
-                <AppLoader>
-                    <ThemeProvider>
+                <ThemeProvider>
+                    <AppLoader>
                         <App />
-                    </ThemeProvider>
-                </AppLoader>
+                    </AppLoader>
+                </ThemeProvider>
             </Provider>
         </React.StrictMode>
     </Router>
