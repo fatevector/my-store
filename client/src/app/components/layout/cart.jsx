@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUserData, getDataStatus } from "../../store/auth";
 import { getCartDataStatus, loadCart } from "../../store/cart";
 
+import Loader from "../common/loader";
 import CartPage from "../pages/cartPage";
 
 const Cart = () => {
@@ -21,7 +22,7 @@ const Cart = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUserDataStatus]);
 
-    if (!cartDataStatus) return "Loading...";
+    if (!cartDataStatus) return <Loader className="mt-300" />;
 
     return <CartPage />;
 };

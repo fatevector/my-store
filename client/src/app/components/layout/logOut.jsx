@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 
 import { logOut } from "../../store/auth";
 
+import Loader from "../common/loader";
+
 const LogOut = () => {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -10,7 +12,7 @@ const LogOut = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    return <h1>Loading...</h1>;
+    return <Loader className="mt-300" />;
 };
 
 export default LogOut;

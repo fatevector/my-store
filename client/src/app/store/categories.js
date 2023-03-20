@@ -11,6 +11,7 @@ const categoriesSlice = createSlice({
     },
     reducers: {
         categoriesRequested: state => {
+            state.error = null;
             state.isLoading = true;
         },
         categoriesReceived: (state, action) => {
@@ -56,5 +57,7 @@ export const getCategoryById = categoryId => state => {
         );
     }
 };
+
+export const getCategoriesError = () => state => state.categories.error;
 
 export default categoriesReducer;

@@ -24,7 +24,7 @@ const Login = () => {
                         <>
                             <h3 className="mb-4">Регистрация</h3>
                             <RegistrationForm />
-                            <p className="d-flex align-items-baseline">
+                            <p className="d-flex align-items-baseline text-body">
                                 Уже имеете аккаунт?
                                 <button
                                     className="btn btn-link"
@@ -38,7 +38,7 @@ const Login = () => {
                         <>
                             <h3 className="mb-4">Вход</h3>
                             <LoginForm />
-                            <p className="d-flex align-items-baseline">
+                            <p className="d-flex align-items-baseline text-body">
                                 Нет аккаунта?
                                 <button
                                     className="btn btn-link"

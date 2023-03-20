@@ -2,6 +2,7 @@ const TOKEN_KEY = "jwt-token";
 const REFRESH_KEY = "jwt-refresh-token";
 const EXPIRES_KEY = "jwt-expires";
 const USERID_KEY = "user-local-id";
+const THEME_KEY = "theme";
 
 export const setTokens = ({
     refreshToken,
@@ -14,6 +15,10 @@ export const setTokens = ({
     localStorage.setItem(TOKEN_KEY, accessToken);
     localStorage.setItem(REFRESH_KEY, refreshToken);
     localStorage.setItem(EXPIRES_KEY, expiresDate);
+};
+
+export const setTheme = theme => {
+    return localStorage.setItem(THEME_KEY, theme);
 };
 
 export const getUserId = () => {
@@ -32,6 +37,10 @@ export const getTokenExpiresDate = () => {
     return localStorage.getItem(EXPIRES_KEY);
 };
 
+export const getTheme = () => {
+    return localStorage.getItem(THEME_KEY);
+};
+
 export const removeAuthData = () => {
     localStorage.removeItem(USERID_KEY);
     localStorage.removeItem(TOKEN_KEY);
@@ -41,11 +50,13 @@ export const removeAuthData = () => {
 
 const localStorageService = {
     setTokens,
+    setTheme,
     getUserId,
     getAccessToken,
     getRefreshToken,
     getTokenExpiresDate,
-    removeAuthData
+    removeAuthData,
+    getTheme
 };
 
 export default localStorageService;

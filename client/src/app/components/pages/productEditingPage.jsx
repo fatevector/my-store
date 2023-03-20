@@ -10,6 +10,7 @@ import {
     updateProduct
 } from "../../store/products";
 
+import Loader from "../common/loader";
 import TextField from "../common/textField";
 import SelectField from "../common/selectField";
 import BackHistoryButton from "../common/backButton";
@@ -94,7 +95,8 @@ const ProductEditingPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [product]);
 
-    if (!product || product._id !== productId || !data) return "Loading...";
+    if (!product || product._id !== productId || !data)
+        return <Loader className="mt-200" />;
 
     return (
         <div className="container mt-5">

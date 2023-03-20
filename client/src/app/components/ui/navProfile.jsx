@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { getCurrentUserData } from "../../store/auth";
 import { useTheme } from "../hooks/useTheme";
 
+import Loader from "../common/loader";
+
 const NavProfile = () => {
     const currentUser = useSelector(getCurrentUserData());
     const { theme, toggleTheme } = useTheme();
@@ -15,7 +17,7 @@ const NavProfile = () => {
         setIsOpen(prevState => !prevState);
     };
 
-    if (!currentUser) return "Loading...";
+    if (!currentUser) return <Loader />;
     return (
         <div className="dropdown" data-bs-theme={theme} onClick={toggleMenu}>
             <div

@@ -1,6 +1,8 @@
 import { Redirect, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
+import { useTheme } from "./app/components/hooks/useTheme";
+
 import ProtectedRoute from "./app/components/common/protectedRoute";
 import NavBar from "./app/components/ui/navBar";
 import Catalog from "./app/components/layout/catalog";
@@ -9,7 +11,6 @@ import Cart from "./app/components/layout/cart";
 import Login from "./app/components/layout/login";
 import User from "./app/components/layout/user";
 import LogOut from "./app/components/layout/logOut";
-import { useTheme } from "./app/components/hooks/useTheme";
 
 function App() {
     const { theme } = useTheme();

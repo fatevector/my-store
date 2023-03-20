@@ -92,7 +92,7 @@ export const loadUser = id => async dispatch => {
         dispatch(userReceived(content));
     } catch (error) {
         dispatch(userRequestFailed(error.message));
-        dispatch(logOut());
+        dispatch(userLoggedOut());
     }
 };
 

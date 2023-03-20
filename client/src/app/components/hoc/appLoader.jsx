@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+    getCategoriesError,
     getCategoriesLoadingStatus,
     loadCategoriesList
 } from "../../store/categories";
@@ -19,6 +20,7 @@ const AppLoader = ({ children }) => {
     const isLoggedIn = useSelector(getIsLoggedIn());
     const userId = useSelector(getCurrentUserId());
     const categoriesStatusLoading = useSelector(getCategoriesLoadingStatus());
+    const categoriesError = useSelector(getCategoriesError());
     const userDataIsLoaded = useSelector(getDataStatus());
 
     useEffect(() => {
@@ -29,8 +31,12 @@ const AppLoader = ({ children }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoggedIn, userDataIsLoaded, userId]);
 
-    if (categoriesStatusLoading || (isLoggedIn && !userDataIsLoaded))
-        return <Loader />;
+    if (
+        categoriesStatusLoading ||
+        categoriesError ||
+        (isLoggedIn && !userDataIsLoaded)
+    )
+        return <Loader className="mt-300" />;
     return children;
 };
 

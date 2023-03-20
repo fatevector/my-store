@@ -100,7 +100,7 @@ const CatalogPage = () => {
                             </div>
                         </>
                     ) : (
-                        <Loader />
+                        <Loader className="mt-70" />
                     )}
                 </div>
             </div>

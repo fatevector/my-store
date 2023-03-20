@@ -11,6 +11,7 @@ import GroupList from "../common/groupList";
 import ProductsList from "../ui/productsList";
 import Pagination from "../common/pagination";
 import ProductCartCard from "../ui/productCartCard";
+import Loader from "../common/loader";
 // import SearchField from "../common/searchField";
 
 const AdminPage = () => {
@@ -133,7 +134,7 @@ const AdminPage = () => {
                             )}
                         </>
                     ) : (
-                        <h1>Loading...</h1>
+                        <Loader className="mt-70" />
                     )}
                 </div>
             </div>
