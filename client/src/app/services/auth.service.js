@@ -21,16 +21,10 @@ const authService = {
         return data;
     },
     refresh: async () => {
-        // todo: Проверить обновление refreshToken (и сравнить с базой и с localStorage)
-        // как будто все работает
-        console.log(localStorageService.getRefreshToken());
-
         const { data } = await httpAuth.post("token", {
             grant_type: "refresh_token",
             refresh_token: localStorageService.getRefreshToken()
         });
-
-        console.log(data.refreshToken);
 
         return data;
     }

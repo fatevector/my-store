@@ -13,6 +13,7 @@ const productsSlice = createSlice({
     },
     reducers: {
         productsRequested: state => {
+            state.error = null;
             state.isLoading = true;
         },
         productsReceived: (state, action) => {
@@ -23,8 +24,17 @@ const productsSlice = createSlice({
             state.error = action.payload;
             state.isLoading = false;
         },
+        currentProductRequested: state => {
+            state.error = null;
+            state.isLoading = true;
+        },
         currentProductReceived: (state, action) => {
             state.currentProduct = action.payload;
+            state.isLoading = false;
+        },
+        currentProductRequestFailed: (state, action) => {
+            state.error = action.payload;
+            state.isLoading = false;
         },
         productDeleted: (state, action) => {
             state.entities = state.entities.filter(
@@ -52,18 +62,20 @@ const {
     productsRequested,
     productsReceived,
     productsRequestFailed,
+    currentProductRequested,
     currentProductReceived,
+    currentProductRequestFailed,
     productDeleted,
     productCreated,
     productUpdated
 } = actions;
 
-const currentProductRequested = createAction(
-    "products/currentProductRequested"
-);
-const currentProductRequestFailed = createAction(
-    "products/currentProductRequestFailed"
-);
+// const currentProductRequested = createAction(
+//     "products/currentProductRequested"
+// );
+// const currentProductRequestFailed = createAction(
+//     "products/currentProductRequestFailed"
+// );
 const productDeleteRequested = createAction("products/productDeleteRequested");
 const productDeleteFailed = createAction("products/productDeleteFailed");
 const productCreateRequested = createAction("products/productCreateRequested");
@@ -107,8 +119,6 @@ export const deleteProductById = id => async (dispatch, getState) => {
     }
 };
 
-// todo: Проверить create, update
-
 export const createProduct =
     (payload, redirect) => async (dispatch, getState) => {
         dispatch(productCreateRequested());
@@ -139,5 +149,7 @@ export const getProductsList = () => state => state.products.entities;
 export const getProductsLoadingStatus = () => state => state.products.isLoading;
 
 export const getCurrentProduct = () => state => state.products.currentProduct;
+
+export const getProductError = () => state => state.products.error;
 
 export default productsReducer;

@@ -6,6 +6,7 @@ import { validator } from "../../utils/validator";
 import { getCategoriesList } from "../../store/categories";
 import {
     getCurrentProduct,
+    getProductError,
     loadProductById,
     updateProduct
 } from "../../store/products";
@@ -20,6 +21,7 @@ const ProductEditingPage = () => {
     const { productId } = useParams();
 
     const product = useSelector(getCurrentProduct());
+    const loadingError = useSelector(getProductError());
 
     const [data, setData] = useState(product);
     const [errors, setErrors] = useState({});
@@ -94,6 +96,14 @@ const ProductEditingPage = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [product]);
+
+    if (loadingError)
+        return (
+            <div className="m-3">
+                <BackHistoryButton />
+                <h3 className="mt-3 text-body">Товар не найден</h3>;
+            </div>
+        );
 
     if (!product || product._id !== productId || !data)
         return <Loader className="mt-200" />;

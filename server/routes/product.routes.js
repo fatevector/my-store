@@ -18,8 +18,6 @@ router.get("/", async (req, res) => {
             list = await Product.find();
         }
 
-        // todo: фильтр list по !isDeleted
-
         res.status(200).send(list);
     } catch (error) {
         res.status(500).json({
@@ -32,8 +30,6 @@ router.get("/:productId", async (req, res) => {
     try {
         const { productId } = req.params;
         const foundProduct = await Product.findById(productId);
-
-        // todo: Если isDeleted, то кинуть ошибку
 
         res.send(foundProduct);
     } catch (error) {
@@ -118,8 +114,6 @@ router.delete("/:productId", auth, async (req, res) => {
         });
     }
 });
-
-// todo: Проверить patch
 
 router.patch("/:productId", auth, async (req, res) => {
     try {

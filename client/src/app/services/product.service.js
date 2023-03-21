@@ -29,7 +29,6 @@ const productService = {
         const { data } = await httpService.delete(productEndpoint + id);
         return data;
     },
-    // todo: Проверить create, update
     create: async payload => {
         const { data } = await httpService.post(productEndpoint, payload);
         return data;
