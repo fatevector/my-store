@@ -11,6 +11,7 @@ import Pagination from "../common/pagination";
 import ProductMenuCard from "../ui/productMenuCard";
 import Loader from "../common/loader";
 import SearchField from "../common/searchField";
+import Sort from "../ui/sort";
 
 const CatalogPage = () => {
     const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const CatalogPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 3;
     const [filter, setFilter] = useState();
+    const [sort, setSort] = useState("up");
 
     const handleCategorySelect = item => {
         setSelectedCategory(item);
@@ -46,16 +48,33 @@ const CatalogPage = () => {
         setSearchRequest(target.value);
     };
 
-    const filteredProducts = filter
-        ? productsList.filter(p => filter.rule(p))
-        : productsList;
+    const handlePriceUp = () => {
+        setSort("up");
+    };
+
+    const handlePriceDown = () => {
+        setSort("down");
+    };
+
+    let sortedProducts;
+    if (productsList)
+        sortedProducts =
+            sort === "up"
+                ? productsList.sort((a, b) => a.price - b.price)
+                : productsList.sort((a, b) => b.price - a.price);
+
+    const filteredProducts =
+        sortedProducts && filter
+            ? sortedProducts.filter(p => filter.rule(p))
+            : sortedProducts;
 
     useEffect(() => {
         if (
             filteredProducts &&
             currentPage > Math.ceil(filteredProducts.length / pageSize)
-        )
+        ) {
             setCurrentPage(prevState => prevState - 1);
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filteredProducts]);
@@ -114,10 +133,15 @@ const CatalogPage = () => {
                         value={searchRequest}
                         onChange={handleSearchChange}
                         placeholder="Поиск..."
-                        className="mb-3 rounded"
+                        className="mb-5 rounded"
                     />
                     {productsList ? (
                         <>
+                            <Sort
+                                onPriceUp={handlePriceUp}
+                                onPriceDown={handlePriceDown}
+                                value={sort}
+                            />
                             <ProductsList
                                 productsList={paginate(
                                     filteredProducts,

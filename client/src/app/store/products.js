@@ -6,7 +6,7 @@ import history from "../utils/history";
 const productsSlice = createSlice({
     name: "products",
     initialState: {
-        entities: [],
+        entities: null,
         currentProduct: null,
         isLoading: true,
         error: null

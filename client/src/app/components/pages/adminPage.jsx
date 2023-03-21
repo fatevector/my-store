@@ -13,6 +13,7 @@ import Pagination from "../common/pagination";
 import ProductCartCard from "../ui/productCartCard";
 import Loader from "../common/loader";
 import SearchField from "../common/searchField";
+import Sort from "../ui/sort";
 
 const AdminPage = () => {
     const { theme } = useTheme();
@@ -29,6 +30,7 @@ const AdminPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 3;
     const [filter, setFilter] = useState();
+    const [sort, setSort] = useState("up");
 
     const handleCategorySelect = item => {
         setSelectedCategory(item);
@@ -53,9 +55,25 @@ const AdminPage = () => {
         setSearchRequest(target.value);
     };
 
-    const filteredProducts = filter
-        ? productsList.filter(p => filter.rule(p))
-        : productsList;
+    const handlePriceUp = () => {
+        setSort("up");
+    };
+
+    const handlePriceDown = () => {
+        setSort("down");
+    };
+
+    let sortedProducts;
+    if (productsList)
+        sortedProducts =
+            sort === "up"
+                ? productsList.sort((a, b) => a.price - b.price)
+                : productsList.sort((a, b) => b.price - a.price);
+
+    const filteredProducts =
+        sortedProducts && filter
+            ? sortedProducts.filter(p => filter.rule(p))
+            : sortedProducts;
 
     useEffect(() => {
         if (
@@ -134,6 +152,11 @@ const AdminPage = () => {
                             />
                             {filteredProducts.length !== 0 ? (
                                 <>
+                                    <Sort
+                                        onPriceUp={handlePriceUp}
+                                        onPriceDown={handlePriceDown}
+                                        value={sort}
+                                    />
                                     <ProductsList
                                         productsList={paginate(
                                             filteredProducts,
