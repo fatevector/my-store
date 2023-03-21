@@ -4,7 +4,8 @@ const SearchField = ({
     value = "",
     onChange,
     placeholder = "Поиск...",
-    name
+    name,
+    className
 }) => {
     return (
         <input
@@ -13,6 +14,7 @@ const SearchField = ({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            className={"bg-body " + className}
         />
     );
 };

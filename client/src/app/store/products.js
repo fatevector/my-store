@@ -6,7 +6,7 @@ import history from "../utils/history";
 const productsSlice = createSlice({
     name: "products",
     initialState: {
-        entities: null,
+        entities: [],
         currentProduct: null,
         isLoading: true,
         error: null
@@ -83,21 +83,20 @@ const productCreateFailed = createAction("products/productCreateFailed");
 const productUpdateRequested = createAction("products/productUpdateRequested");
 const productUpdateFailed = createAction("products/productUpdateFailed");
 
-export const loadProductsList =
-    (category = { name: "Популярное" }, page, limit) =>
-    async dispatch => {
-        dispatch(productsRequested());
-        try {
-            const { content } = await productService.getByCategory(
-                category,
-                page,
-                limit
-            );
-            dispatch(productsReceived(content));
-        } catch (error) {
-            dispatch(productsRequestFailed(error.message));
+export const loadProductsList = (category, page, limit) => async dispatch => {
+    dispatch(productsRequested());
+    try {
+        let content;
+        if (category) {
+            content = await productService.getByCategory(category, page, limit);
+        } else {
+            content = await productService.get();
         }
-    };
+        dispatch(productsReceived(content.content));
+    } catch (error) {
+        dispatch(productsRequestFailed(error.message));
+    }
+};
 
 export const loadProductById = id => async (dispatch, getState) => {
     dispatch(currentProductRequested());

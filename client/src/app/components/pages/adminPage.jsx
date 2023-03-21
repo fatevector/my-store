@@ -12,7 +12,7 @@ import ProductsList from "../ui/productsList";
 import Pagination from "../common/pagination";
 import ProductCartCard from "../ui/productCartCard";
 import Loader from "../common/loader";
-// import SearchField from "../common/searchField";
+import SearchField from "../common/searchField";
 
 const AdminPage = () => {
     const { theme } = useTheme();
@@ -25,20 +25,20 @@ const AdminPage = () => {
         category => category.name === "Популярное"
     );
     const [selectedCategory, setSelectedCategory] = useState(popularCategory);
-    // const [searchRequest, setSearchRequest] = useState(undefined);
+    const [searchRequest, setSearchRequest] = useState(undefined);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 3;
-    // const [filter, setFilter] = useState();
+    const [filter, setFilter] = useState();
 
     const handleCategorySelect = item => {
         setSelectedCategory(item);
     };
 
     const handleClearFilter = () => {
-        setSelectedCategory(popularCategory);
+        setSelectedCategory(undefined);
         setCurrentPage(1);
-        // setFilter(undefined);
-        // setSearchRequest(undefined);
+        setFilter(undefined);
+        setSearchRequest(undefined);
     };
 
     const handlePageChange = pageIndex => {
@@ -49,27 +49,54 @@ const AdminPage = () => {
         history.push("/admin/create");
     };
 
+    const handleSearchChange = ({ target }) => {
+        setSearchRequest(target.value);
+    };
+
+    const filteredProducts = filter
+        ? productsList.filter(p => filter.rule(p))
+        : productsList;
+
     useEffect(() => {
         if (
-            productsList &&
-            currentPage > Math.ceil(productsList.length / pageSize)
+            filteredProducts &&
+            currentPage > Math.ceil(filteredProducts.length / pageSize)
         )
             setCurrentPage(prevState => prevState - 1);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productsList]);
+    }, [filteredProducts]);
 
     useEffect(() => {
         if (selectedCategory !== undefined) {
             setCurrentPage(1);
-            // setSearchRequest(undefined);
-            dispatch(loadProductsList(selectedCategory));
-            // setFilter({
-            //     rule: product => product.category === selectedCategory._id
-            // });
+            setSearchRequest(undefined);
+            dispatch(loadProductsList());
+            if (selectedCategory.name === "Популярное") {
+                setFilter({
+                    rule: product => product.popular === true
+                });
+            } else {
+                setFilter({
+                    rule: product => product.category === selectedCategory._id
+                });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCategory]);
+
+    useEffect(() => {
+        if (searchRequest !== undefined) {
+            setCurrentPage(1);
+            setSelectedCategory(undefined);
+            setFilter({
+                rule: p =>
+                    p.name.toLowerCase().includes(searchRequest.toLowerCase())
+            });
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchRequest]);
 
     return (
         <>
@@ -91,12 +118,6 @@ const AdminPage = () => {
                 <div className="d-flex flex-column container me-3">
                     {productsList ? (
                         <>
-                            {/* <SearchField
-                            name="searchRequest"
-                            value={searchRequest}
-                            onChange={handleSearchChange}
-                            placeholder="Поиск..."
-                        /> */}
                             <button
                                 className="btn border border-primary py-3 mb-3 fs-2 text-body bg-body"
                                 onClick={handleCreateProduct}
@@ -104,11 +125,18 @@ const AdminPage = () => {
                             >
                                 +
                             </button>
-                            {productsList.length !== 0 ? (
+                            <SearchField
+                                name="searchRequest"
+                                value={searchRequest}
+                                onChange={handleSearchChange}
+                                placeholder="Поиск..."
+                                className="mb-3 rounded"
+                            />
+                            {filteredProducts.length !== 0 ? (
                                 <>
                                     <ProductsList
                                         productsList={paginate(
-                                            productsList,
+                                            filteredProducts,
                                             currentPage,
                                             pageSize
                                         )}
@@ -122,7 +150,9 @@ const AdminPage = () => {
                                     <div className="row">
                                         <div className="col-12 g-3 d-flex justify-content-center">
                                             <Pagination
-                                                itemsCount={productsList.length}
+                                                itemsCount={
+                                                    filteredProducts.length
+                                                }
                                                 pageSize={pageSize}
                                                 currentPage={currentPage}
                                                 onPageChange={handlePageChange}
@@ -131,7 +161,7 @@ const AdminPage = () => {
                                     </div>
                                 </>
                             ) : (
-                                <h3>В данной категории нет товаров</h3>
+                                <h3>По данному запросу нет товаров</h3>
                             )}
                         </>
                     ) : (
