@@ -14,7 +14,7 @@ const SearchField = ({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
-            className={"bg-body " + className}
+            className={"bg-body text-body " + className}
         />
     );
 };

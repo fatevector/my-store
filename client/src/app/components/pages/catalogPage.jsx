@@ -10,7 +10,7 @@ import ProductsList from "../ui/productsList";
 import Pagination from "../common/pagination";
 import ProductMenuCard from "../ui/productMenuCard";
 import Loader from "../common/loader";
-// import SearchField from "../common/searchField";
+import SearchField from "../common/searchField";
 
 const CatalogPage = () => {
     const dispatch = useDispatch();
@@ -22,37 +22,74 @@ const CatalogPage = () => {
         category => category.name === "Популярное"
     );
     const [selectedCategory, setSelectedCategory] = useState(popularCategory);
-    // const [searchRequest, setSearchRequest] = useState(undefined);
+    const [searchRequest, setSearchRequest] = useState(undefined);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 3;
-    // const [filter, setFilter] = useState();
+    const [filter, setFilter] = useState();
 
     const handleCategorySelect = item => {
         setSelectedCategory(item);
     };
 
     const handleClearFilter = () => {
-        setSelectedCategory(popularCategory);
+        setSelectedCategory(undefined);
         setCurrentPage(1);
-        // setFilter(undefined);
-        // setSearchRequest(undefined);
+        setFilter(undefined);
+        setSearchRequest(undefined);
     };
 
     const handlePageChange = pageIndex => {
         setCurrentPage(pageIndex);
     };
 
+    const handleSearchChange = ({ target }) => {
+        setSearchRequest(target.value);
+    };
+
+    const filteredProducts = filter
+        ? productsList.filter(p => filter.rule(p))
+        : productsList;
+
+    useEffect(() => {
+        if (
+            filteredProducts &&
+            currentPage > Math.ceil(filteredProducts.length / pageSize)
+        )
+            setCurrentPage(prevState => prevState - 1);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filteredProducts]);
+
     useEffect(() => {
         if (selectedCategory !== undefined) {
             setCurrentPage(1);
-            // setSearchRequest(undefined);
-            dispatch(loadProductsList(selectedCategory));
-            // setFilter({
-            //     rule: product => product.category === selectedCategory._id
-            // });
+            setSearchRequest(undefined);
+            dispatch(loadProductsList());
+            if (selectedCategory.name === "Популярное") {
+                setFilter({
+                    rule: product => product.popular === true
+                });
+            } else {
+                setFilter({
+                    rule: product => product.category === selectedCategory._id
+                });
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCategory]);
+
+    useEffect(() => {
+        if (searchRequest !== undefined) {
+            setCurrentPage(1);
+            setSelectedCategory(undefined);
+            setFilter({
+                rule: p =>
+                    p.name.toLowerCase().includes(searchRequest.toLowerCase())
+            });
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchRequest]);
 
     return (
         <>
@@ -72,17 +109,18 @@ const CatalogPage = () => {
                     </button>
                 </div>
                 <div className="d-flex flex-column container">
+                    <SearchField
+                        name="searchRequest"
+                        value={searchRequest}
+                        onChange={handleSearchChange}
+                        placeholder="Поиск..."
+                        className="mb-3 rounded"
+                    />
                     {productsList ? (
                         <>
-                            {/* <SearchField
-                            name="searchRequest"
-                            value={searchRequest}
-                            onChange={handleSearchChange}
-                            placeholder="Поиск..."
-                        /> */}
                             <ProductsList
                                 productsList={paginate(
-                                    productsList,
+                                    filteredProducts,
                                     currentPage,
                                     pageSize
                                 )}
@@ -92,7 +130,7 @@ const CatalogPage = () => {
                             <div className="row">
                                 <div className="col-12 g-3 d-flex justify-content-center">
                                     <Pagination
-                                        itemsCount={productsList.length}
+                                        itemsCount={filteredProducts.length}
                                         pageSize={pageSize}
                                         currentPage={currentPage}
                                         onPageChange={handlePageChange}
