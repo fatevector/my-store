@@ -5,7 +5,8 @@ import { getCart } from "../../store/cart";
 import ProductCartCard from "../ui/productCartCard";
 
 const CartPage = () => {
-    const cart = useSelector(getCart());
+    let cart = useSelector(getCart());
+    if (cart) cart = cart.filter(p => !p.isDeleted);
 
     return (
         <div className="m-3">

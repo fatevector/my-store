@@ -101,64 +101,68 @@ const ProductEditingPage = () => {
     return (
         <div className="container mt-5">
             <BackHistoryButton />
-            <div className="row">
-                <div className="col-md-6 offset-md-3 shadow p-4">
-                    <form onSubmit={handleSubmit}>
-                        <TextField
-                            label="Название"
-                            name="name"
-                            value={data.name}
-                            onChange={handleChange}
-                            error={errors.name}
-                        />
-                        <TextField
-                            label="Описание"
-                            name="definition"
-                            value={data.definition}
-                            onChange={handleChange}
-                            error={errors.definition}
-                        />
-                        <TextField
-                            label="Ссылка на изображение"
-                            name="image"
-                            value={data.image}
-                            onChange={handleChange}
-                            error={errors.image}
-                        />
-                        <CheckBoxField
-                            name="popular"
-                            value={data.popular}
-                            onChange={handleChange}
-                            error={errors.popular}
-                        >
-                            Популярный товар
-                        </CheckBoxField>
-                        <SelectField
-                            label="Категория"
-                            defaultOption="Выберите..."
-                            options={categoriesList}
-                            name="category"
-                            onChange={handleChange}
-                            value={data.category}
-                            error={errors.category}
-                        />
-                        <TextField
-                            label="Стоимость"
-                            name="price"
-                            value={data.price}
-                            onChange={handleChange}
-                            error={errors.price}
-                        />
-                        <button
-                            type="submit"
-                            disabled={!isValid}
-                            className="btn btn-primary w-100 mx-auto"
-                        >
-                            Подтвердить изменения
-                        </button>
-                    </form>
+            {product.isDeleted ? (
+                <h3 className="m-3 text-body">Данный товар удален</h3>
+            ) : (
+                <div className="row">
+                    <div className="col-md-6 offset-md-3 shadow p-4">
+                        <form onSubmit={handleSubmit}>
+                            <TextField
+                                label="Название"
+                                name="name"
+                                value={data.name}
+                                onChange={handleChange}
+                                error={errors.name}
+                            />
+                            <TextField
+                                label="Описание"
+                                name="definition"
+                                value={data.definition}
+                                onChange={handleChange}
+                                error={errors.definition}
+                            />
+                            <TextField
+                                label="Ссылка на изображение"
+                                name="image"
+                                value={data.image}
+                                onChange={handleChange}
+                                error={errors.image}
+                            />
+                            <CheckBoxField
+                                name="popular"
+                                value={data.popular}
+                                onChange={handleChange}
+                                error={errors.popular}
+                            >
+                                Популярный товар
+                            </CheckBoxField>
+                            <SelectField
+                                label="Категория"
+                                defaultOption="Выберите..."
+                                options={categoriesList}
+                                name="category"
+                                onChange={handleChange}
+                                value={data.category}
+                                error={errors.category}
+                            />
+                            <TextField
+                                label="Стоимость"
+                                name="price"
+                                value={data.price}
+                                onChange={handleChange}
+                                error={errors.price}
+                            />
+                            <button
+                                type="submit"
+                                disabled={!isValid}
+                                className="btn btn-primary w-100 mx-auto"
+                            >
+                                Подтвердить изменения
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

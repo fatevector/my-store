@@ -14,7 +14,8 @@ import Loader from "../common/loader";
 
 const CatalogPage = () => {
     const dispatch = useDispatch();
-    const productsList = useSelector(getProductsList());
+    let productsList = useSelector(getProductsList());
+    if (productsList) productsList = productsList.filter(p => !p.isDeleted);
     const categoriesList = useSelector(getCategoriesList());
     const categories = useSelector(getCategoriesList());
     const popularCategory = categories.find(

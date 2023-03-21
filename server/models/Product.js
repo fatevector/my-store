@@ -27,6 +27,9 @@ const schema = new Schema(
         price: {
             type: Number,
             required: true
+        },
+        isDeleted: {
+            type: Boolean
         }
     },
     {

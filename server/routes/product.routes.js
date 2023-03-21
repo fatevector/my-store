@@ -100,8 +100,8 @@ router.delete("/:productId", auth, async (req, res) => {
             const { productId } = req.params;
             const removedProduct = await Product.findById(productId);
 
-            // todo: не просто удалять: либо удалять во всех корзинах, либо просто добавлять isDeleted: true
-            await removedProduct.remove();
+            removedProduct.isDeleted = true;
+            removedProduct.save();
 
             return res.send(null);
         } else {

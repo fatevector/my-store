@@ -22,7 +22,11 @@ const ProductPage = ({ id }) => {
     return (
         <div className="m-3">
             <BackHistoryButton />
-            <ProductCartCard product={product} />;
+            {product.isDeleted ? (
+                <h3 className="m-3 text-body">Данный товар удален</h3>
+            ) : (
+                <ProductCartCard product={product} />
+            )}
         </div>
     );
 };
