@@ -180,6 +180,32 @@ export const removeProductFromUserCart = id => async (dispatch, getState) => {
     }
 };
 
+export const updateProductQuantity =
+    ({ id, quantity }) =>
+    async (dispatch, getState) => {
+        dispatch(userUpdateRequested());
+        try {
+            const currentUser = getState().auth.user;
+            const newCartData = currentUser.cart.map(p => {
+                if (p.productId === id) {
+                    return {
+                        ...p,
+                        quantity
+                    };
+                }
+                return p;
+            });
+            const newUserData = {
+                ...currentUser,
+                cart: newCartData
+            };
+            const { content } = await userService.update(newUserData);
+            dispatch(userUpdated(content));
+        } catch (error) {
+            dispatch(updateUserFailed(error.message));
+        }
+    };
+
 export const getIsLoggedIn = () => state => state.auth.isLoggedIn;
 
 export const getDataStatus = () => state => state.auth.dataLoaded;
@@ -193,5 +219,7 @@ export const getUserLoadingStatus = () => state => state.auth.isLoading;
 export const getCurrentUserData = () => state => state.auth.user;
 
 export const getAuthErrors = () => state => state.auth.error;
+
+export const getUserCart = () => state => state.auth.user?.cart;
 
 export default authReducer;

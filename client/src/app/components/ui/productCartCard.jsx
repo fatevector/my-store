@@ -1,9 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import history from "../../utils/history";
-import { getCurrentUserData, getDataStatus } from "../../store/auth";
+import {
+    getCurrentUserData,
+    getDataStatus,
+    getUserCart,
+    updateProductQuantity
+} from "../../store/auth";
 import { addProductToCart, removeProductFromCart } from "../../store/cart";
 import { deleteProductById } from "../../store/products";
+
+import Counter from "../common/counter";
 
 const ProductCartCard = ({
     product,
@@ -13,6 +20,10 @@ const ProductCartCard = ({
     const dispatch = useDispatch();
     const currentUserData = useSelector(getCurrentUserData());
     const currentUserDataStatus = useSelector(getDataStatus());
+    const userCart = useSelector(getUserCart());
+    const productQuantity = userCart.find(
+        p => p.productId === product._id
+    ).quantity;
     const inCart = currentUserDataStatus
         ? currentUserData.cart.find(p => p.productId === product._id)
         : false;
@@ -37,6 +48,10 @@ const ProductCartCard = ({
         dispatch(deleteProductById(id));
     };
 
+    const handleUpdateQuantity = id => quantity => {
+        dispatch(updateProductQuantity({ id, quantity }));
+    };
+
     return (
         <div className="card mb-3 d-flex flex-row ps-0 text-body bg-body">
             <img
@@ -56,6 +71,12 @@ const ProductCartCard = ({
                 {!onAdminPage ? (
                     inCart ? (
                         <>
+                            {onCartPage && (
+                                <Counter
+                                    onUpdate={handleUpdateQuantity(product._id)}
+                                    initValue={productQuantity}
+                                />
+                            )}
                             <button
                                 className="btn btn-lg btn-danger me-2 mb-2"
                                 onClick={() =>

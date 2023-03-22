@@ -1,8 +1,6 @@
 import history from "../../utils/history";
-import { useTheme } from "../hooks/useTheme";
 
 const ProductMenuCard = ({ product }) => {
-    const { theme } = useTheme();
     const handleNavToProductPage = id => {
         history.push(`/product/${id}`);
     };
@@ -22,6 +20,9 @@ const ProductMenuCard = ({ product }) => {
                 </div>
                 <div className="card-body">
                     <h5 className="card-title">{product.name}</h5>
+                    <h3 className="card-text text-body text-end">
+                        {product.price} руб.
+                    </h3>
                 </div>
             </div>
         </div>
