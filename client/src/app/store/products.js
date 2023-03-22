@@ -70,12 +70,6 @@ const {
     productUpdated
 } = actions;
 
-// const currentProductRequested = createAction(
-//     "products/currentProductRequested"
-// );
-// const currentProductRequestFailed = createAction(
-//     "products/currentProductRequestFailed"
-// );
 const productDeleteRequested = createAction("products/productDeleteRequested");
 const productDeleteFailed = createAction("products/productDeleteFailed");
 const productCreateRequested = createAction("products/productCreateRequested");

@@ -2,11 +2,9 @@ const chalk = require("chalk");
 
 const categoriesMock = require("../mock/categories.json");
 const productsMock = require("../mock/products.json");
-// const usersMock = require("../mock/users.json");
 
 const Category = require("../models/Category");
 const Product = require("../models/Product");
-// const User = require("../models/User");
 
 const createInitialEntity = async (Model, data) => {
     await Model.collection.drop();
@@ -35,9 +33,4 @@ module.exports = async () => {
     if (products.length !== productsMock.length) {
         await createInitialEntity(Product, productsMock);
     }
-
-    // const users = await User.find();
-    // if (users.length !== usersMock.length) {
-    //     await createInitialEntity(User, usersMock);
-    // }
 };
