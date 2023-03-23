@@ -132,7 +132,6 @@ export const updateProduct =
             dispatch(productUpdated(content));
             history.push(redirect);
         } catch (error) {
-            console.log(error.message);
             dispatch(productUpdateFailed(error.message));
         }
     };

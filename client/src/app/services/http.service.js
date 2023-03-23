@@ -78,7 +78,6 @@ http.interceptors.response.use(
             error.response.status < 500;
 
         if (!expectedErrors) {
-            console.log(error);
             toast.error("Что-то пошло не так, попробуйте позже.");
         }
         return Promise.reject(error);

@@ -17,7 +17,7 @@ const NavProfile = () => {
         setIsOpen(prevState => !prevState);
     };
 
-    if (!currentUser) return <Loader />;
+    if (!currentUser) return <Loader innerClass="loader-sm" />;
     return (
         <div className="dropdown" data-bs-theme={theme} onClick={toggleMenu}>
             <div
