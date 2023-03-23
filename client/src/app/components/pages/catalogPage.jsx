@@ -133,7 +133,7 @@ const CatalogPage = () => {
                         value={searchRequest}
                         onChange={handleSearchChange}
                         placeholder="Поиск..."
-                        className="mb-5 rounded"
+                        className="mb-3 rounded"
                     />
                     {productsList ? (
                         <>

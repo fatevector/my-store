@@ -21,12 +21,12 @@ const ProductCartCard = ({
     const currentUserData = useSelector(getCurrentUserData());
     const currentUserDataStatus = useSelector(getDataStatus());
     const userCart = useSelector(getUserCart());
-    const productQuantity = userCart.find(
-        p => p.productId === product._id
-    ).quantity;
     const inCart = currentUserDataStatus
         ? currentUserData.cart.find(p => p.productId === product._id)
         : false;
+    const productQuantity = inCart
+        ? userCart.find(p => p.productId === product._id).quantity
+        : 1;
 
     const handleNavToCart = () => {
         history.push("/cart");
