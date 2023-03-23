@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import logo from "../../img/logo180.png";
+
 import { getIsLoggedIn, getUserRole } from "../../store/auth";
 import { useTheme } from "../hooks/useTheme";
 
@@ -17,10 +19,12 @@ const NavBar = () => {
             <div className="container-fluid">
                 <ul className="nav">
                     <li className="nav-item">
-                        <Link className="nav-link" to="/">
-                            Каталог
+                        <Link className="nav-link p-0" to="/">
+                            <img src={logo} alt="Главная" className="logo" />
                         </Link>
                     </li>
+                </ul>
+                <ul className="d-flex align-items-baseline nav">
                     {userRole === "admin" && (
                         <li className="nav-item">
                             <Link className="nav-link" to="/admin">
@@ -28,8 +32,6 @@ const NavBar = () => {
                             </Link>
                         </li>
                     )}
-                </ul>
-                <ul className="d-flex align-items-baseline nav">
                     {isLoggedIng ? (
                         <>
                             <li className="nav-item">

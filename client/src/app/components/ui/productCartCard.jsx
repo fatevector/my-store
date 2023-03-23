@@ -4,6 +4,7 @@ import history from "../../utils/history";
 import {
     getCurrentUserData,
     getDataStatus,
+    getIsLoggedIn,
     getUserCart,
     updateProductQuantity
 } from "../../store/auth";
@@ -27,13 +28,15 @@ const ProductCartCard = ({
     const productQuantity = inCart
         ? userCart.find(p => p.productId === product._id).quantity
         : 1;
+    const isLoggedIn = useSelector(getIsLoggedIn());
 
     const handleNavToCart = () => {
         history.push("/cart");
     };
 
     const handleAddToCart = product => {
-        dispatch(addProductToCart(product));
+        if (isLoggedIn) dispatch(addProductToCart(product));
+        else history.push("/login", { from: history.location });
     };
 
     const handleRemoveFromCart = id => {

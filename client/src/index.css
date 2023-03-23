@@ -65,3 +65,9 @@ code {
 .mt-300 {
   margin-top: 300px;
 }
+
+.logo {
+  height: 48px;
+  width: 70px;
+  margin-left: 5px;
+}
