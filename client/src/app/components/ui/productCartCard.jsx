@@ -56,7 +56,7 @@ const ProductCartCard = ({
     };
 
     return (
-        <div className="card mb-3 d-flex flex-row ps-0 text-body bg-body">
+        <div className="card mb-3 d-flex flex-row ps-0 text-body bg-body w-100">
             <img
                 className="rounded-start"
                 src={product.image}
