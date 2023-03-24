@@ -2,7 +2,9 @@ import React from "react";
 
 const CheckBoxField = ({ name, value, onChange, children, error }) => {
     const getCheckBoxClasses = () =>
-        "form-check-input text-body bg-body" + (error ? " is-invalid" : "");
+        "form-check-input" +
+        (value ? "" : " bg-body") +
+        (error ? " is-invalid" : "");
 
     const handleChange = () => {
         onChange({ name, value: !value });
