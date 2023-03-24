@@ -9,7 +9,7 @@ import Loader from "../common/loader";
 
 const NavProfile = () => {
     const currentUser = useSelector(getCurrentUserData());
-    const { theme, toggleTheme } = useTheme();
+    const { theme } = useTheme();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -36,9 +36,6 @@ const NavProfile = () => {
                 <Link to={`/profile`} className="dropdown-item">
                     Профиль
                 </Link>
-                <button className="dropdown-item" onClick={toggleTheme}>
-                    Сменить тему
-                </button>
                 <Link to="/logout" className="dropdown-item">
                     Выйти
                 </Link>

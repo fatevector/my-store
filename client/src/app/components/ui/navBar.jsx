@@ -12,7 +12,7 @@ import NavProfile from "./navProfile";
 const NavBar = () => {
     const isLoggedIng = useSelector(getIsLoggedIn());
     const userRole = useSelector(getUserRole());
-    const { theme } = useTheme();
+    const { theme, toggleTheme } = useTheme();
 
     return (
         <nav className={`navbar ${theme} mb-3 border border-secondary-subtle`}>
@@ -25,6 +25,14 @@ const NavBar = () => {
                     </li>
                 </ul>
                 <ul className="d-flex align-items-baseline nav">
+                    <li className="nav-item">
+                        <button
+                            className="btn btn-primary"
+                            onClick={toggleTheme}
+                        >
+                            Сменить тему
+                        </button>
+                    </li>
                     {userRole === "admin" && (
                         <li className="nav-item">
                             <Link className="nav-link" to="/admin">
