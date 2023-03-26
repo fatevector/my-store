@@ -118,7 +118,7 @@ const AdminPage = () => {
 
     return (
         <>
-            <h1 className="ms-3">Каталог</h1>
+            <h1 className="ms-3">Админ-панель</h1>
             <div className="d-flex">
                 <div className="d-flex flex-column flex-shink-0 px-3">
                     <GroupList
