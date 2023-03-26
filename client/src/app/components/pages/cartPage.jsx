@@ -13,9 +13,9 @@ const CartPage = () => {
         let price = 0;
         if (cart.length !== 0)
             cart.forEach(product => {
-                const { quantity } = userCart.find(
-                    p => p.productId === product._id
-                );
+                let quantity = 1;
+                const pr = userCart.find(p => p.productId === product._id);
+                if (pr && pr.quantity) quantity = pr.quantity;
                 price += product.price * quantity;
             });
         return price;
