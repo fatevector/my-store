@@ -133,7 +133,7 @@ const AdminPage = () => {
                         Очистить
                     </button>
                 </div>
-                <div className="d-flex flex-column container me-3">
+                <div className="d-flex flex-column container">
                     {productsList ? (
                         <>
                             <button
