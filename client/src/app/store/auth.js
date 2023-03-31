@@ -5,6 +5,7 @@ import history from "../utils/history";
 import localStorageService from "../services/localStorage.service";
 import userService from "../services/user.service";
 import authService from "../services/auth.service";
+import { resetCart } from "./cart";
 
 const initialState = localStorageService.getAccessToken()
     ? {
@@ -82,6 +83,7 @@ const updateUserFailed = createAction("users/updateUserFailed");
 export const logOut = () => dispatch => {
     localStorageService.removeAuthData();
     dispatch(userLoggedOut());
+    dispatch(resetCart());
     history.push("/");
 };
 
